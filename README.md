@@ -7,10 +7,8 @@ This browser based web application to ...
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
 * Hi my name is Cole! I am excited to start this project.
-* Test
 * Hi, my name is Clinton! Let's start the show!
 * Hi, my name is Jessie/Lin! Let's start our project and have fun.
-* hello hello
 
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
