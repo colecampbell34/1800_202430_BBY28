@@ -1,1 +1,16 @@
-
+.nav-item {
+    width: 20%; /* 5 equal sections, each taking 20% width */
+    text-align: center;
+  }
+  .nav-link {
+    display: block;
+    text-align: center;
+  }
+  .nav-link i {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 4px; /* Add some space between icon and text */
+  }
+  .nav-link span {
+    display: block;
+  }
