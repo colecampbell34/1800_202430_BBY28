@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>My BCIT Project</title>
+    <title>CollectiveCoin</title>
     <meta name="comp1800 template" content="My 1800 App" />
 
     <!-- Required meta tags -->
@@ -26,112 +26,151 @@
 
     <!-- Link to styles of your own -->
     <!-- <link rel="stylesheet" href="./styles/style.css" /> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">  </head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+  </head>
 
   <body>
     <!------------------------------>
     <!-- Your HTML Layout go here -->
     <!------------------------------>
-    <!-- Stuff for body goes here -->
+
     <!--body & header-->
-    <nav class="p-3 mb-2 bg-secondary text-white">
+    <nav class="p-3 mb-2 bg-secondary text-white sticky-top">
       <div class="container-fluid">
-        <img src="/images/cointree_BW.jpg" alt="coin tree" height="36"> 
+        <img src="/images/cointree_BW.jpg" alt="coin tree" height="36" />
         <a class="navbar-brand" href="#">CollectiveCoin</a>
       </div>
     </nav>
 
-  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="p-5 mb-4 bg-light rounded-3">
       <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">To see more details about this month's budget.</h1>
-        <p class="col-md-8 fs-4">Please click the botton below</p>
+        <h1 class="display-5 fw-bold">
+          To see more details about this month's budget.
+        </h1>
+        <p class="col-md-8 fs-4">Please click the button below</p>
 
         <button class="btn btn-warning btn-lg" type="button">Details</button>
-        
+
         <!-- Add an onclick attribute to define click event handler -->
         <!-- <button onclick="window.location.href='login.html'" class="btn btn-primary btn-lg" type="button">Login/Signup</button> -->
       </div>
-</div>
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  <div class="col">
-    <div class="card h-100">
-      <img src="images/8541701_chart_pie_icon.png" class="card-img-top" alt="image" width="30%">
-      <div class="card-body">
-        <h5 class="card-title">Summary</h5>
-        <p class="card-text">Summary........</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
+    </div>
+
+    <!-- Main section of homepage -->
+    <div class="container-fluid">
+      <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <div class="col">
+          <div class="card h-100">
+            <img
+              src="images/8541701_chart_pie_icon.png"
+              class="card-img-top"
+              alt="Summary Image"
+              width="30%"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Summary for *Month*</h5>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-primary w-100">
+                <i class="bi bi-graph-up"></i> View
+              </button>
+              <small class="text-muted mt-2 d-block"
+                >Last updated 3 mins ago</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100">
+            <img
+              src="images/172507_box_money_icon.png"
+              class="card-img-top"
+              alt="Expenses Image"
+              width="30%"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Individual Expenses</h5>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-success w-100">
+                <i class="bi bi-cash-stack"></i> View
+              </button>
+              <small class="text-muted mt-2 d-block"
+                >Last updated 3 mins ago</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100">
+            <img
+              src="images/3790071_activity_community_group_recreation_social_icon.png"
+              class="card-img-top"
+              alt="Group Target Image"
+              width="30%"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Your last budget sheet</h5>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-warning w-100">
+                <i class="bi bi-people"></i> View
+              </button>
+              <small class="text-muted mt-2 d-block"
+                >Last updated 3 mins ago</small
+              >
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col">
-    <div class="card h-100">
-      <img src="images/172507_box_money_icon.png" class="card-img-top" alt="image" width="30%">
-      <div class="card-body">
-        <h5 class="card-title">Individual Expenses</h5>
-        <p class="card-text">Summary......</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card h-100">
-      <img src="images/3790071_activity_community_group_recreation_social_icon.png" class="card-img-top" alt="image" width="30%">
-      <div class="card-body">
-        <h5 class="card-title">Group Target</h5>
-        <p class="card-text">Summary........</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
-  </div>
-</div>
 
     <!--footer by Cole-->
-    <nav class="navbar navbar-light bg-secondary navbar-expand fixed-bottom">
-        <ul class="navbar-nav d-flex justify-content-between w-100">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-house-fill"></i>
-              <span>Home</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-bar-chart-fill"></i>
-              <span>Expenses</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-patch-plus-fill"></i>
-              <span>New</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-people-fill"></i>
-              <span>Groups</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-file-text-fill"></i>
-              <span>Summary</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+    <nav class="navbar navbar-light bg-secondary navbar-expand sticky-bottom">
+      <ul class="navbar-nav d-flex justify-content-between w-100">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-house-fill"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-bar-chart-fill"></i>
+            <span>Expenses</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-patch-plus-fill"></i>
+            <span>New</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-people-fill"></i>
+            <span>Groups</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/html/settings.html">
+            <i class="bi bi-gear-wide-connected"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
 
     <!-- Link to scripts of your own -->
-    <!-- <script src="./scripts/script.js"></script> -->
+    <script src="/scripts/script.js"></script>
   </body>
 </html>
