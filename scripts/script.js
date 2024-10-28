@@ -24,5 +24,7 @@ document.getElementById('increaseFont').addEventListener('click', (event) => {
   event.preventDefault(); // Prevent default behavior
   changeFontSize(2); // Increase font size by 2px
 });
+
+
 // Changing font size
 

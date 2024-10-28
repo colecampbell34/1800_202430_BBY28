@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CollectiveCoin</title>
+    <meta name="comp1800 template" content="My 1800 App" />
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Boostrap Library JS CDN  go here -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Other libraries go here -->
+
+    <!-- Link to styles of your own -->
+    <!-- <link rel="stylesheet" href="./styles/style.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+     <!-------------------------------------------------------->
+    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+    <!-------------------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  </head>
+
+  <body>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+    
+    <!--body & header-->
+    <nav class="p-3 mb-2 bg-secondary text-white sticky-top">
+      <div class="container-fluid">
+        <img src="./images/cointree_BW.jpg" alt="coin tree" height="36" />
+        <a class="navbar-brand" href="#">CollectiveCoin</a>
+      </div>
+    </nav>
+
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">
+          <span id="name-goes-here"></span> , welcome to use CollectiveCoin!
+        </h1>
+        <p class="col-md-8 fs-4">Let's see more details below!</p>
+
+        <!-- Add an onclick attribute to define click event handler -->
+        <!-- <button onclick="window.location.href='login.html'" class="btn btn-primary btn-lg" type="button">Login/Signup</button> -->
+      </div>
+    </div>
+
+    <!-- Main section of homepage -->
+    <div class="container-fluid">
+      <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <div class="col">
+          <div class="card h-100">
+            <img
+              src="./images/8541701_chart_pie_icon.png"
+              class="card-img-top"
+              alt="Summary Image"
+              width="30%"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Summary for *Month*</h5>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-primary w-100">
+                <i class="bi bi-graph-up"></i> View
+              </button>
+              <small class="text-muted mt-2 d-block"
+                >Last updated 3 mins ago</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100">
+            <img
+              src="images/172507_box_money_icon.png"
+              class="card-img-top"
+              alt="Expenses Image"
+              width="30%"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Individual Expenses</h5>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-success w-100">
+                <i class="bi bi-cash-stack"></i> View
+              </button>
+              <small class="text-muted mt-2 d-block"
+                >Last updated 3 mins ago</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100">
+            <img
+              src="images/3790071_activity_community_group_recreation_social_icon.png"
+              class="card-img-top"
+              alt="Group Target Image"
+              width="30%"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Your last budget sheet</h5>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-warning w-100">
+                <i class="bi bi-people"></i> View
+              </button>
+              <small class="text-muted mt-2 d-block"
+                >Last updated 3 mins ago</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--footer by Cole-->
+    <nav class="navbar navbar-light bg-secondary navbar-expand sticky-bottom">
+      <ul class="navbar-nav d-flex justify-content-between w-100">
+        <li class="nav-item">
+          <a class="nav-link" href="./main.html">
+            <i class="bi bi-house-fill"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./html/expenses.html">
+            <i class="bi bi-bar-chart-fill"></i>
+            <span>Expenses</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./html/new.html">
+            <i class="bi bi-patch-plus-fill"></i>
+            <span>New</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./html/groups.html">
+            <i class="bi bi-people-fill"></i>
+            <span>Groups</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./html/settings.html">
+            <i class="bi bi-gear-wide-connected"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <!-- Link to scripts of your own -->
+    <script src="./scripts/firebaseAPI_BBY28.js"></script>
+    <!-- <script src="./scripts/authentication.js"></script> -->
+    <script src="./scripts/main.js"></script>
+  </body>
+</html>
