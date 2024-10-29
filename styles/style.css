@@ -18,3 +18,34 @@
 body {
   transition: font-size 0.2s; /* Smooth transition for font size change */
 }
+
+/* style for login page by Jessie */
+      /* blur the background */
+      .modal-overlay {
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* background settings */
+        justify-content: center;
+        align-items: center;
+    }
+    .container-fluid{
+      display:fixed;
+      background:rgba(119, 116, 116, 0.5)
+    }
+  
+    .modal-content {
+        background: white;
+        padding: 20px;
+        width: 300px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    /* forbidding from scrolling when on the popup page */
+      body.modal-open {
+          overflow: hidden;
+      }

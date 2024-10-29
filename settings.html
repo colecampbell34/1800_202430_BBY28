@@ -23,7 +23,8 @@
     ></script>
 
     <!-- Other libraries go here -->
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <!-- Link to styles of your own -->
     <!-- <link rel="stylesheet" href="./styles/style.css" /> -->
     <link
@@ -37,19 +38,13 @@
     <!-- Your HTML Layout go here -->
     <!------------------------------>
 
-    <!--body & header-->
-    <nav class="p-3 mb-2 bg-secondary text-white sticky-top">
-      <div class="container-fluid">
-        <img src="/images/cointree_BW.jpg" alt="coin tree" height="36" />
-        <a class="navbar-brand" href="#">CollectiveCoin</a>
-      </div>
-    </nav>
+    <!--header-->
+    <div id="header" class="sticky-top"></div>
 
     <!-- Main Preferences Section -->
     <div class="container mt-5 mb-5">
       <h2 class="text-center mb-4">Settings</h2>
       <div class="row">
-
         <!-- Preferences Form Section -->
         <div class="col-md-9">
           <!-- Profile Settings -->
@@ -109,7 +104,9 @@
                     Receive SMS notifications
                   </label>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Notifications</button>
+                <button type="submit" class="btn btn-primary">
+                  Update Notifications
+                </button>
               </form>
             </div>
           </div>
@@ -119,14 +116,20 @@
             <div class="card-header bg-secondary text-white">Font Settings</div>
             <div class="card-body">
               <form>
-                <button id="decreaseFont" type="button" class="btn btn-primary">Decrease Font</button>
-                <button id="increaseFont" type="button" class="btn btn-primary">Increase Font</button>
+                <button id="decreaseFont" type="button" class="btn btn-primary">
+                  Decrease Font
+                </button>
+                <button id="increaseFont" type="button" class="btn btn-primary">
+                  Increase Font
+                </button>
               </form>
             </div>
           </div>
           <!-- Theme Settings -->
           <div class="card">
-            <div class="card-header bg-secondary text-white">Theme Settings</div>
+            <div class="card-header bg-secondary text-white">
+              Theme Settings
+            </div>
             <div class="card-body">
               <form>
                 <div class="form-check mb-2">
@@ -153,7 +156,9 @@
                     Dark Theme
                   </label>
                 </div>
-                <button type="submit" class="btn btn-primary">Apply Theme</button>
+                <button type="submit" class="btn btn-primary">
+                  Apply Theme
+                </button>
               </form>
             </div>
           </div>
@@ -161,42 +166,8 @@
       </div>
     </div>
 
-
     <!--footer by Cole-->
-    <nav class="navbar navbar-light bg-secondary navbar-expand sticky-bottom">
-      <ul class="navbar-nav d-flex justify-content-between w-100">
-        <li class="nav-item">
-          <a class="nav-link" href="../main.html">
-            <i class="bi bi-house-fill"></i>
-            <span>Home</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/html/expenses.html">
-            <i class="bi bi-bar-chart-fill"></i>
-            <span>Expenses</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/html/new.html">
-            <i class="bi bi-patch-plus-fill"></i>
-            <span>New</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/html/groups.html">
-            <i class="bi bi-people-fill"></i>
-            <span>Groups</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/html/settings.html">
-            <i class="bi bi-gear-wide-connected"></i>
-            <span>Settings</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <div id="navbar" class="sticky-bottom"></div>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
@@ -204,5 +175,6 @@
 
     <!-- Link to scripts of your own -->
     <script src="/scripts/script.js"></script>
+    <script src="./scripts/skeleton.js"></script>
   </body>
 </html>
