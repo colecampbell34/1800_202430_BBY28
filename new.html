@@ -41,35 +41,65 @@
     <!--header-->
     <div id="header" class="sticky-top"></div>
 
-    <!-- Expenses Section -->
-    <!-- Shows what user needs to input to create a new budget group. -->
+    <!-- New Group Section -->
     <div class="container mt-5 mb-5">
-      <h2 class="text-center mb-4">New Group</h2>
-      <div class="row">
-        <div>
+      <h2 class="text-center mb-4">Create a New Group</h2>
+
+      <div class="row justify-content-center">
+        <div class="col-md-6">
           <form>
-            <div>
-              <label for="groupName">Name for new group:</label>
+            <!-- Group Name -->
+            <div class="mb-3">
+              <label for="groupName" class="form-label"
+                >Name for New Group:</label
+              >
               <input
                 type="text"
+                class="form-control"
                 id="groupName"
                 placeholder="Los Angeles Trip 2025"
+                required
               />
             </div>
-            <div>
-              <label for="groupGoal">Group budget goal in dollars:</label>
-              <input type="number" id="groupGoal" placeholder="4250" />
+
+            <!-- Group Budget Goal -->
+            <div class="mb-3">
+              <label for="groupGoal" class="form-label"
+                >Group Budget Goal ($):</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="groupGoal"
+                placeholder="5000"
+                required
+              />
             </div>
-            <div>
-              <label for="groupDate">Start date of event:</label>
-              <input type="date" id="groupDate" />
+
+            <!-- Start Date -->
+            <div class="mb-3">
+              <label for="groupDate" class="form-label"
+                >Start Date of Event:</label
+              >
+              <input type="date" class="form-control" id="groupDate" required />
             </div>
-            <div>
-              <label for="groupSize">Group size: </label>
-              <input type="number" id="groupSize" placeholder="1" />
+
+            <!-- Group Size -->
+            <div class="mb-3">
+              <label for="groupSize" class="form-label">Group Size:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="groupSize"
+                placeholder="1"
+                min="1"
+                required
+              />
             </div>
-            <div>
-              <input type="submit" value="Submit" />
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>
@@ -85,6 +115,6 @@
 
     <!-- Link to scripts of your own -->
     <script src="/scripts/script.js"></script>
-    <script src="./scripts/skeleton.js"></script>
+    <script src="/scripts/skeleton.js"></script>
   </body>
 </html>

@@ -24,7 +24,7 @@
 
     <!-- Other libraries go here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <!-- Link to styles of your own -->
     <!-- <link rel="stylesheet" href="./styles/style.css" /> -->
     <link
@@ -54,24 +54,6 @@
             </div>
             <div class="card-body">
               <form>
-                <!-- <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    placeholder="Enter your username"
-                  />
-                </div> -->
-                <!-- <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="Enter your email"
-                  />
-                </div> -->
                 <button type="submit" class="btn btn-primary">Log Out</button>
               </form>
             </div>
@@ -116,15 +98,25 @@
             <div class="card-header bg-secondary text-white">Font Settings</div>
             <div class="card-body">
               <form>
-                <button id="decreaseFont" type="button" class="btn btn-primary">
-                  Decrease Font
-                </button>
-                <button id="increaseFont" type="button" class="btn btn-primary">
-                  Increase Font
-                </button>
+                <label for="fontSizeSlider" class="form-label"
+                  >Adjust Font Size</label
+                >
+                <input
+                  type="range"
+                  class="form-range"
+                  id="fontSizeSlider"
+                  min="12"
+                  max="36"
+                  step="1"
+                  value="16"
+                />
+                <div class="mt-2">
+                  Font Size: <span id="fontSizeValue">16</span>px
+                </div>
               </form>
             </div>
           </div>
+
           <!-- Theme Settings -->
           <div class="card">
             <div class="card-header bg-secondary text-white">
@@ -175,6 +167,6 @@
 
     <!-- Link to scripts of your own -->
     <script src="/scripts/script.js"></script>
-    <script src="./scripts/skeleton.js"></script>
+    <script src="/scripts/skeleton.js"></script>
   </body>
 </html>

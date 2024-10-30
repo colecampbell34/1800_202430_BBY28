@@ -1,30 +1,24 @@
-function sayHello() {
-    
+// Retrieve the saved font size from localStorage or default to 16px
+let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 16;
+
+// Apply the saved font size on page load
+document.body.style.fontSize = `${currentFontSize}px`;
+
+// Update the slider value and display text on page load
+const fontSizeSlider = document.getElementById('fontSizeSlider');
+const fontSizeValue = document.getElementById('fontSizeValue');
+fontSizeSlider.value = currentFontSize;
+fontSizeValue.textContent = currentFontSize;
+
+// Function to change the font size based on the slider value
+function updateFontSize() {
+  currentFontSize = parseInt(fontSizeSlider.value); // Get the slider value
+  document.body.style.fontSize = `${currentFontSize}px`; // Apply new font size
+  fontSizeValue.textContent = currentFontSize; // Update the displayed size
+
+  // Save the new font size to localStorage
+  localStorage.setItem('fontSize', currentFontSize);
 }
-//sayHello();
 
-// Changing font size
-let currentFontSize = 16; // Starting font size in pixels
-
-// Function to change the font size by a given amount
-function changeFontSize(amount) {
-  currentFontSize += amount; // Adjust the current font size
-  if (currentFontSize < 12) currentFontSize = 12; // Set minimum font size
-  if (currentFontSize > 36) currentFontSize = 36; // Set maximum font size
-  document.body.style.fontSize = `${currentFontSize}px`; // Apply new size
-}
-
-// Add event listeners to the buttons
-document.getElementById('decreaseFont').addEventListener('click', (event) => {
-  event.preventDefault(); // Prevent default behavior
-  changeFontSize(-2); // Decrease font size by 2px
-});
-
-document.getElementById('increaseFont').addEventListener('click', (event) => {
-  event.preventDefault(); // Prevent default behavior
-  changeFontSize(2); // Increase font size by 2px
-});
-
-
-// Changing font size
-
+// Add an event listener to the slider to detect changes
+fontSizeSlider.addEventListener('input', updateFontSize);
