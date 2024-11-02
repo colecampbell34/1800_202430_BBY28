@@ -56,9 +56,28 @@ document
                 max: individualMax, // Optional: Add the user's max goal in this group
               });
 
+              // Update all existing members with the new max
+              membersSnapshot.forEach((memberDoc) => {
+                const memberId = memberDoc.id; // Existing member's ID
+                const updatedMemberData = {
+                  max: totalGoal / groupSize, // New max per member
+                };
+                batch.update(
+                  db.doc(`budget-sheets/${joinCode}/group-members/${memberId}`),
+                  updatedMemberData
+                );
+              });
+
               // Commit the batch operation
               batch
                 .commit()
+                .then(() => {
+                  // Update the size of the group in the budget-sheets document
+                  return db
+                    .collection("budget-sheets")
+                    .doc(joinCode)
+                    .update({ size: groupSize });
+                })
                 .then(() => {
                   alert("Successfully joined group: " + doc.data().groupname);
                   // Redirect to a relevant page or update UI
@@ -88,101 +107,116 @@ document
 
 
 
-
-
-
-
-
-
 // Load the group data onto the cards
 // Fetch groups for the current user and populate the group cards
 function loadUserGroups() {
-    const userId = firebase.auth().currentUser.uid; // Get the current user's ID
-    const groupsContainer = document.querySelector(
-      ".row.row-cols-1.row-cols-md-2.row-cols-lg-2.g-4"
-    ); // Select the container for the group cards
-    const groupCardTemplate = document.getElementById("groupCardTemplate"); // Select the card template
-  
-    // Reference to the budget-sheets collection to find groups the user is part of
-    db.collection("budget-sheets")
-      .get()
-      .then((querySnapshot) => {
-        const groupPromises = []; // Array to hold promises for group data
-  
-        querySnapshot.forEach((doc) => {
-          const groupRef = db.collection("budget-sheets").doc(doc.id).collection("group-members").doc(userId);
-          
-          // Check if the user is a member of this group
-          groupPromises.push(
-            groupRef.get().then((memberDoc) => {
-              if (memberDoc.exists) {
-                // User is a member, fetch group data
-                return doc.data(); // Return group data
-              } else {
-                return null; // User is not a member
-              }
-            })
-          );
-        });
-  
-        // Wait for all group membership checks to complete
-        return Promise.all(groupPromises);
-      })
-      .then((groupDataArray) => {
-        // Filter out null values (non-member groups)
-        const validGroupData = groupDataArray.filter((data) => data !== null);
-  
-        if (validGroupData.length === 0) {
-          groupsContainer.innerHTML =
-            '<p class="text-center">You are not a member of any groups.</p>';
-          return;
-        }
-  
-        // Clear existing cards
-        groupsContainer.innerHTML = "";
-  
-        // Create and append group cards
-        validGroupData.forEach((groupData) => {
-          const groupId = groupData.id; // Use the document ID as groupId
-          const groupCard = createGroupCard(groupData, groupId, groupCardTemplate);
-          groupsContainer.appendChild(groupCard); // Append the card to the container
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching user groups: ", error);
+  const userId = firebase.auth().currentUser.uid; // Get the current user's ID
+  const groupsContainer = document.querySelector(
+    ".row.row-cols-1.row-cols-md-2.row-cols-lg-2.g-4"
+  ); // Select the container for the group cards
+  const groupCardTemplate = document.getElementById("groupCardTemplate"); // Select the card template
+
+  // Reference to the budget-sheets collection to find groups the user is part of
+  db.collection("budget-sheets")
+    .get()
+    .then((querySnapshot) => {
+      const groupPromises = []; // Array to hold promises for group data
+
+      querySnapshot.forEach((doc) => {
+        const groupRef = db
+          .collection("budget-sheets")
+          .doc(doc.id)
+          .collection("group-members")
+          .doc(userId);
+
+        // Check if the user is a member of this group
+        groupPromises.push(
+          groupRef.get().then((memberDoc) => {
+            if (memberDoc.exists) {
+              // User is a member, fetch group data
+              const groupData = doc.data();
+              groupData.id = doc.id; // Add the document ID to groupData
+              return groupData; // Return group data
+            } else {
+              return null; // User is not a member
+            }
+          })
+        );
       });
+
+      // Wait for all group membership checks to complete
+      return Promise.all(groupPromises);
+    })
+    .then((groupDataArray) => {
+      // Filter out null values (non-member groups)
+      const validGroupData = groupDataArray.filter((data) => data !== null);
+
+      if (validGroupData.length === 0) {
+        groupsContainer.innerHTML =
+          '<p class="text-center">You are not a member of any groups.</p>';
+        return;
+      }
+
+      // Clear existing cards
+      groupsContainer.innerHTML = "";
+
+      // Create and append group cards
+      validGroupData.forEach((groupData) => {
+        const groupId = groupData.id; // Get the groupId from groupData
+        const groupCard = createGroupCard(
+          groupData,
+          groupId,
+          groupCardTemplate
+        );
+        groupsContainer.appendChild(groupCard); // Append the card to the container
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching user groups: ", error);
+    });
+}
+
+
+
+// Create a card element for a group using the template
+function createGroupCard(groupData, groupId, template) {
+  const cardClone = template.cloneNode(true); // Clone the template
+  cardClone.classList.remove("d-none"); // Remove the hidden class
+
+  // Populate the card with group data
+  cardClone.querySelector(".group-name").textContent =
+    groupData.groupname || "Unnamed Group";
+  cardClone.querySelector(".group-goal").textContent = groupData.max || "N/A";
+  cardClone.querySelector(".group-contribution").textContent =
+    groupData.currentContribution || "0";
+
+  // Attach event listener for the view details button
+  cardClone.querySelector(".view-details-btn").onclick = () =>
+    viewGroupDetails(groupId);
+
+  return cardClone;
+}
+
+
+
+function viewGroupDetails(groupId) {
+  console.log("Group ID before redirection:", groupId); // Check value here
+  if (!groupId) {
+    console.error("No Group ID provided!");
+    return; // Prevent proceeding if groupId is not valid
   }
-  
-  // Create a card element for a group using the template
-  function createGroupCard(groupData, groupId, template) {
-    const cardClone = template.cloneNode(true); // Clone the template
-    cardClone.classList.remove("d-none"); // Remove the hidden class
-  
-    // Populate the card with group data
-    cardClone.querySelector(".group-name").textContent =
-      groupData.groupname || "Unnamed Group";
-    cardClone.querySelector(".group-goal").textContent = groupData.max || "N/A";
-    cardClone.querySelector(".group-contribution").textContent =
-      groupData.currentContribution || "0";
-  
-    // Attach event listener for the view details button
-    cardClone.querySelector(".view-details-btn").onclick = () =>
-      viewGroupDetails(groupId);
-  
-    return cardClone;
+  // Redirect to the budget sheet page with the join code
+  window.location.href = `budgetsheet.html?joinCode=${groupId}`;
+}
+
+
+
+// Call the function to load user groups when the page loads
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    loadUserGroups(); // User is signed in, load user groups
+  } else {
+    console.log("No user is signed in.");
+    // Optionally, handle the case when no user is logged in
   }
-  
-  // Optional function to handle viewing group details
-  function viewGroupDetails(groupId) {
-    alert(`Viewing details for group ID: ${groupId}`);
-  }
-  
-  // Call the function to load user groups when the page loads
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      loadUserGroups(); // User is signed in, load user groups
-    } else {
-      console.log("No user is signed in.");
-      // Optionally, handle the case when no user is logged in
-    }
-  });
+});

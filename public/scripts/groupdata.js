@@ -1,94 +1,114 @@
-// // Function to read all the main group data from the Firestore "budget-sheets/" collection
-// // Input param is the String representing the user, aka, the document name
-// function readMainData(group) {
-//   db.collection("budget-sheets")
-//     .doc(group) //name of the collection and documents should match exactly with what you have in Firestore
-//     .onSnapshot(
-//       (doc) => {
-//         //arrow notation
-//         document.getElementById("group-name").innerHTML = doc.data().groupname;
-//         document.getElementById("group-goal").innerHTML = doc.data().max;
-//         document.getElementById("current-amount").innerHTML =
-//           doc.data().current;
-//       },
-//       (error) => {
-//         console.log("Error calling onSnapshot", error);
-//       }
-//     );
-
-//   var user = authResult.user;
-//   db.collection("budget-sheets")
-//     .doc(group) //name of the collection and documents should match exactly with what you have in Firestore
-//     .collection("group-members")
-//     .doc(user.uid)
-//     .onSnapshot(
-//       (doc) => {
-//         //arrow notation
-//         document.getElementById("name-goes-here").innerHTML = doc.data().name;
-//         document.getElementById("current-goes-here").innerHTML +=
-//           doc.data().current;
-//         document.getElementById("max-goes-here").innerHTML += doc.data().max;
-//       },
-//       (error) => {
-//         console.log("Error calling onSnapshot", error);
-//       }
-//     );
-// }
-// readMainData("groupidnum"); //calling the function
-
-
-
-
-
-
-
-// Function to read all the main group data from the Firestore "budget-sheets" collection
-// Input param is the String representing the group, aka, the document name
-function readMainData(group) {
-    // Get general group data
-    db.collection("budget-sheets")
-      .doc(group)
-      .onSnapshot(
-        (doc) => {
-          if (doc.exists) {
-            document.getElementById("group-name").innerHTML = doc.data().groupname;
-            document.getElementById("group-goal").innerHTML = doc.data().max;
-            document.getElementById("current-amount").innerHTML = doc.data().current;
-          } else {
-            console.log("No group document found.");
-          }
-        },
-        (error) => {
-          console.log("Error calling onSnapshot:", error);
-        }
-      );
+// Function to get query parameters from the URL
+function getGroupIdFromURL(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
   
-    // Ensure user is authenticated before accessing user-specific data
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        db.collection("budget-sheets")
-          .doc(group)
-          .collection("group-members")
-          .doc(user.uid)
-          .onSnapshot(
-            (doc) => {
-              if (doc.exists) {
-                document.getElementById("name-goes-here").innerHTML = doc.data().name;
-                document.getElementById("current-goes-here").innerHTML = doc.data().current;
-                document.getElementById("max-goes-here").innerHTML = doc.data().max;
-              } else {
-                console.log("No document found for this user in group-members.");
-              }
-            },
-            (error) => {
-              console.log("Error calling onSnapshot for user data:", error);
-            }
-          );
-      } else {
-        console.log("No user is signed in.");
-      }
+  // Use this function to get the group ID when the page loads
+  document.addEventListener("DOMContentLoaded", function() {
+    const groupId = getGroupIdFromURL("joinCode");
+    if (!groupId) {
+      console.error("No group ID provided in the URL");
+      alert("No group ID provided. Please go back and try again.");
+      return;
+    }
+    // Load the group data using the groupId
+    console.log("Group ID:", groupId);
+    // Here you would proceed to load your group data based on groupId
+  });
+
+
+
+// Function to load group data into budgetsheet.html based on the specific group
+function loadGroupData() {
+    const groupId = getGroupIdFromURL("joinCode"); // Get groupId from URL
+  
+    if (!groupId) {
+      console.error("No group ID provided in the URL.");
+      return;
+    }
+    
+    console.log("Fetching document with ID:", groupId);
+    // Fetch the group document from Firestore using the groupId
+    db.collection("budget-sheets").doc(groupId).get()
+      .then((doc) => {
+        if (doc.exists) {
+          const groupData = doc.data();
+  
+          // Populate the HTML with group data
+          document.getElementById("group-name").textContent = groupData.groupname || "Unnamed Group";
+          document.getElementById("group-goal").textContent = groupData.max || "0";
+          document.getElementById("current-amount").textContent = groupData.current || "0";
+  
+          // Update progress bar
+            console.log("Current contribution:", groupData.current);
+            console.log("Max contribution", groupData.max);
+
+          const progressPercentage = (groupData.current / groupData.max) * 100;
+          const progressBar = document.querySelector(".progress-bar");
+          progressBar.style.width = `${progressPercentage}%`;
+          progressBar.textContent = `${Math.round(progressPercentage)}%`;
+  
+          // Load members list
+          loadGroupMembers(groupId);
+          
+          // Load expense breakdown if needed
+        //   loadExpenseBreakdown(groupData.expenses, groupData.max);           // UPDATE THIS (BREAKDOWN OF COSTS)
+        } else {
+          console.error("Group document not found.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching group data: ", error);
+      });
+  }
+  
+
+
+  // Function to load members of the group
+  function loadGroupMembers(groupId) {
+    const membersList = document.querySelector(".card-body ul.list-group");
+    membersList.innerHTML = ""; // Clear any existing members
+  
+    db.collection("budget-sheets").doc(groupId).collection("group-members").get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const member = doc.data();
+          
+          // Create a list item for each member
+          const memberItem = document.createElement("li");
+          memberItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+          memberItem.innerHTML = `
+            <span>${member.name || "Anonymous"}</span>
+            <span>Contribution: $ (${member.contribution}/${member.max})</span>
+          `;
+          membersList.appendChild(memberItem);
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching group members: ", error);
+      });
+  }
+  
+
+
+  // Optional: Function to load the expense breakdown if data is structured for it
+  function loadExpenseBreakdown(expenses, max) {
+    const expenseTableBody = document.querySelector("table.table-striped tbody");
+    expenseTableBody.innerHTML = ""; // Clear any existing rows
+  
+    expenses.forEach((expense) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${expense.category}</td>
+        <td>$${expense.amount}</td>
+        <td>${((expense.amount / max) * 100).toFixed(2)}%</td>
+      `;
+      expenseTableBody.appendChild(row);
     });
   }
   
-  // Call the function with a specific group ID
-  readMainData("groupidnum");
+
+
+  // Call loadGroupData when the page loads
+  window.onload = loadGroupData;

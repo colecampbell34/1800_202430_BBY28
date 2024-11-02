@@ -44,8 +44,18 @@ document.querySelector("form").addEventListener("submit", (e) => {
         .doc(userId)
         .set({
           name: userName, // Replace this with actual user data
-          max: groupData[1] / groupData[3], // Dividing max / group members which in this case is just / 1 since this is the first member
+          max: groupData.max / groupData.size, // Dividing max / group members which in this case is just / 1 since this is the first member
           contribution: 0, // Initial contribution, can be set as needed
+        })
+        .then(() => {
+          // Add the group details to the user's groups collection
+          const userGroupPath = `users/${userId}/groups/${joinCode}`;
+
+          return db.doc(userGroupPath).set({
+            joinCode: joinCode,
+            groupName: groupData.groupname || "Unnamed Group", // Optional: Group name
+            max: groupData.max / groupData.size, // User's max goal in this group
+          });
         })
         .then(() => {
           alert("Group created successfully! Your join code is " + joinCode);
@@ -56,33 +66,3 @@ document.querySelector("form").addEventListener("submit", (e) => {
       console.error("Error creating group:", error);
     });
 });
-
-// db.collection("budget-sheets")
-// .doc(joinCode)
-// .set(groupData)
-// .then(() => {
-//   console.log("New group created with join code:", joinCode);
-
-//   // Assuming `userId` is the ID of the currently logged-in user
-//   const userId = firebase.auth().currentUser.uid;
-
-//   // Create a `group-members` subcollection with the user's ID
-//   db.collection("budget-sheets")
-//     .doc(joinCode)
-//     .collection("group-members")
-//     .doc(userId)
-//     .set({
-//       name: "Your Name",  // Replace this with actual user data
-//       contribution: 0,    // Initial contribution, can be set as needed
-//     })
-//     .then(() => {
-//       alert("Group created successfully! Your join code is " + joinCode);
-//       window.location.assign("groups.html");
-//     })
-//     .catch((error) => {
-//       console.error("Error adding user to group-members subcollection:", error);
-//     });
-// })
-// .catch((error) => {
-//   console.error("Error creating group:", error);
-// });
