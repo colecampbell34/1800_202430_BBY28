@@ -22,6 +22,21 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-------------------------------------------------------->
+    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+    <!-------------------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+    />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
     <!-- Other libraries go here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -41,78 +56,52 @@
     <!--header-->
     <div id="header" class="sticky-top"></div>
 
-    <!-- Groups Section -->
-    <div class="container mt-5 mb-5 fill-space">
+    <!-- Join Group Section (Top Right Corner) -->
+    <div class="container mt-3">
+      <div class="row justify-content-end">
+        <div class="col-auto">
+          <form id="joinGroupForm" class="d-flex">
+            <input
+              type="text"
+              class="form-control me-2"
+              id="joinCode"
+              placeholder="Enter Join Code"
+              required
+            />
+            <button type="submit" class="btn btn-primary">Join Group</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-3 mb-5 fill-space">
       <h2 class="text-center mb-4">My Groups</h2>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
-        <!-- Los Angeles Trip -->
-        <div class="col">
+        <!-- Card Template (Hidden) -->
+        <div class="col d-none" id="groupCardTemplate">
           <div class="card shadow-sm">
             <div class="card-body">
               <h5 class="card-title">
-                <i class="bi bi-people me-2"></i>Los Angeles Trip 2024
+                <i class="bi bi-people me-2"></i
+                ><span class="group-name"></span>
               </h5>
               <p class="card-text">
-                <strong>Group Goal:</strong> $2500<br />
-                <strong>Contribution to Date:</strong> $2400
+                <strong>Group Goal:</strong> $<span class="group-goal"></span
+                ><br />
+                <strong>Contribution to Date:</strong> $<span
+                  class="group-contribution"
+                ></span>
               </p>
+              <button class="btn btn-secondary view-details-btn">
+                View Details
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- South Korea Family Trip -->
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-people me-2"></i>South Korea Family Trip 2025
-              </h5>
-              <p class="card-text">
-                <strong>Group Goal:</strong> $10000<br />
-                <strong>Contribution to Date:</strong> $5000
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Europe Trip -->
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-people me-2"></i>Europe Trip 2026
-              </h5>
-              <p class="card-text">
-                <strong>Group Goal:</strong> $3400<br />
-                <strong>Contribution to Date:</strong> $400
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Vernon Weekend Trip -->
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-people me-2"></i>Vernon Weekend Trip 2024
-              </h5>
-              <p class="card-text">
-                <strong>Group Goal:</strong> $700<br />
-                <strong>Contribution to Date:</strong> $700
-              </p>
-            </div>
-          </div>
-        </div>
+        <!-- Existing Groups Will Be Populated Here -->
       </div>
-
-      <!-- Filter Button -->
-      <!-- <div class="text-center mt-4">
-        <button class="btn btn-primary">
-          <i class="bi bi-funnel me-2"></i>Filter by...
-        </button>
-      </div> -->
     </div>
 
     <!--footer by Cole-->
@@ -123,6 +112,8 @@
     <!---------------------------------------------->
 
     <!-- Link to scripts of your own -->
+    <script src="/scripts/firebaseAPI_BBY28.js"></script>
+    <script src="/scripts/groupspage.js"></script>
     <script src="/scripts/font.js"></script>
     <script src="/scripts/skeleton.js"></script>
   </body>

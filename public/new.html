@@ -22,6 +22,21 @@
       crossorigin="anonymous"
     ></script>
 
+     <!-------------------------------------------------------->
+    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+    <!-------------------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+    />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
     <!-- Other libraries go here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -86,22 +101,9 @@
               <input type="date" class="form-control" id="groupDate" required />
             </div>
 
-            <!-- Group Size -->
-            <div class="mb-3">
-              <label for="groupSize" class="form-label">Group Size:</label>
-              <input
-                type="number"
-                class="form-control"
-                id="groupSize"
-                placeholder="1"
-                min="1"
-                required
-              />
-            </div>
-
             <!-- Submit Button -->
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button id="form" type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>
@@ -116,7 +118,9 @@
     <!---------------------------------------------->
 
     <!-- Link to scripts of your own -->
-    <script src="/scripts/font.js"></script>
+    <script src="/scripts/firebaseAPI_BBY28.js"></script>
     <script src="/scripts/skeleton.js"></script>
+    <script src="/scripts/newgroup.js"></script>
+    <script src="/scripts/font.js"></script>
   </body>
 </html>
