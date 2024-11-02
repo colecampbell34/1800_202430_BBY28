@@ -22,6 +22,21 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-------------------------------------------------------->
+    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+    <!-------------------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+    />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
     <!-- Other libraries go here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -50,11 +65,11 @@
           <!-- Profile Settings -->
           <div class="card mb-4">
             <div class="card-header bg-secondary text-white">
-              Profile Settings
+              Profile Settings ~ <span id="name-goes-here"></span>
             </div>
             <div class="card-body">
               <form>
-                <button type="submit" class="btn btn-primary">Log Out</button>
+                <button id="logout" type="submit" class="btn btn-primary">Log Out</button>
               </form>
             </div>
           </div>
@@ -166,7 +181,10 @@
     <!---------------------------------------------->
 
     <!-- Link to scripts of your own -->
-    <script src="/scripts/script.js"></script>
+    <script src="/scripts/firebaseAPI_BBY28.js"></script>
+    <script src="/scripts/font.js"></script>
     <script src="/scripts/skeleton.js"></script>
+    <script src="/scripts/main.js"></script>
+    <script src="/scripts/logout.js"></script>
   </body>
 </html>
