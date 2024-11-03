@@ -117,7 +117,7 @@
 
           <!-- Manage Group -->
           <div class="card shadow-sm mb-4">
-            <div class="card-header bg-secondary text-white">Manage Group</div>
+            <div class="card-header bg-secondary text-white">Manage Group ~ Join Code&#40<span id="joinCode-goes-here"></span>&#41</div>
             <div class="card-body row">
               <div class="col-md-6 mb-3">
                 <label for="adjustGoal" class="form-label"
@@ -126,23 +126,25 @@
                 <input
                   type="number"
                   id="adjustGoal"
+                  step="1000"
                   class="form-control"
-                  placeholder="Enter new goal"
+                  placeholder="Enter amount"
                 />
                 <button class="btn btn-primary mt-2 w-100">Update Goal</button>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="adjustContribution" class="form-label"
-                  >Adjust Contribution</label
+                  >Add Contribution</label
                 >
                 <input
                   type="number"
-                  id="adjustContribution"
+                  id="addContribution"
+                  step="100"
                   class="form-control"
-                  placeholder="Enter new contribution"
+                  placeholder="Enter amount"
                 />
                 <button class="btn btn-primary mt-2 w-100">
-                  Update Contribution
+                  Contribute
                 </button>
               </div>
             </div>
