@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add an event listener to the slider to detect changes
     fontSizeSlider.addEventListener("input", updateFontSize);
   } else {
-    // this should show on every page without the slider
-    console.warn("Slider or display element not found.");
+    // No slider on the current page, which is fine
   }
 });

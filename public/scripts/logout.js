@@ -1,7 +1,7 @@
-//------------------------------------------------
+//-------------------------------------------------
 // Call this function when the "logout" button is clicked
 //-------------------------------------------------
-function logout() {
+document.querySelector("#logout").addEventListener("click", function() {
   firebase
     .auth()
     .signOut()
@@ -13,18 +13,14 @@ function logout() {
     .catch((error) => {
       // An error happened.
     });
-}
-
-
-document.querySelector("#logout").addEventListener("click", function (e) {
-  logout();
 });
 
 
-
-
-document.getElementById("delete").addEventListener("click", async (event) => {
-  event.preventDefault();
+//-------------------------------------------------
+// Call this function when the "delete" button is clicked
+//-------------------------------------------------
+document.getElementById("delete").addEventListener("click", async (e) => {
+  e.preventDefault(); // Stops the traditional acton of refreshing the page on form submission, and runs this function instead
   const auth = firebase.auth();
   const user = auth.currentUser;
   const userId = user.uid;
@@ -36,22 +32,30 @@ document.getElementById("delete").addEventListener("click", async (event) => {
   if (!confirmation) return;
 
   try {
-    // Delete user data from Firestore collections
-    await deleteUserData(userId);
+    // Step 1: Delete user data from Firetore
+    await deleteUserData(userId); // <== await pauses here until deleteUserData is done
 
-    // Delete the user's account from Firebase Authentication
-    await user.delete(); // Directly deleting the user
+    try {
+      // Step 2: Delete user from Firebase Authentication
+      await user.delete(); // <== await pauses here until the user's account is deleted
+    } catch (error) {
+      if (error.code === "auth/requires-recent-login") {
+        const credential = firebase.auth.EmailAuthProvider.credential(
+          user.email,
+          prompt("Please enter your password again to confirm deletion:")
+        );
+        await user.reauthenticateWithCredential(credential);
+        await user.delete(); // Retry after re-authentication
+      } else {
+        throw error;
+      }
+    }
 
     alert("Account deleted successfully.");
-    window.location.replace("index.html"); // Redirect after deletion
+    window.location.replace("index.html");
   } catch (error) {
-    if (error.code === "auth/requires-recent-login") {
-      alert("Please re-login and try again.");
-      // Handle reauthentication here
-    } else {
-      console.error("Error deleting account:", error);
-      alert("An error occurred while trying to delete your account.");
-    }
+    console.error("Error deleting account:", error);
+    alert("An error occurred while trying to delete your account.");
   }
 });
 
@@ -60,34 +64,43 @@ document.getElementById("delete").addEventListener("click", async (event) => {
 // Helper function to delete user data from Firestore
 async function deleteUserData(userId) {
   try {
-    // Delete all subcollections and the user document from the "users" collection
+    // Delete all sub-collections and the user document from the "users" collection
     const userDocRef = db.collection("users").doc(userId);
     await deleteUserDocumentAndSubcollections(userDocRef);
     await userDocRef.delete();
-    console.log(`User document and subcollections for ${userId} deleted.`);
+    console.log(`User document and sub-collections for ${userId} deleted.`);
 
     // Retrieve all group IDs in the "budget-sheet" collection
-    const groupIdsSnapshot = await db.collection("budget-sheet").get();
+    const groupIdsSnapshot = await db.collection("budget-sheets").get();
+    console.log(`Number of groups found: ${groupIdsSnapshot.size}`);
 
-    // Sequentially check and delete user documents in each "group-members" subcollection
+    // Sequentially check and delete user documents in each "group-members" sub-collection
     for (const groupDoc of groupIdsSnapshot.docs) {
+      console.log("The for loop was entered");
       const groupId = groupDoc.id;
+      console.log("The groupId i am checking is: ", groupId);
       const memberDocRef = db
-        .collection("budget-sheet")
+        .collection("budget-sheets")
         .doc(groupId)
         .collection("group-members")
         .doc(userId);
 
+      // Log the memberDocRef path to verify it's correct
+      console.log(
+        `Checking group ${groupId} for user ${userId} in group-members...`
+      );
+
       // Check if the user document exists in this group's "group-members" collection
       const memberDoc = await memberDocRef.get();
+      console.log(`Test user document found: ${memberDoc.exists}`);
+
       if (memberDoc.exists) {
         await memberDocRef.delete();
-        console.log(`Deleted user ${userId} from group-members in group ${groupId}`);
-      } else {
-        console.log(`User ${userId} not found in group ${groupId}`);
+        console.log(
+          `Deleted user ${userId} from group-members in group ${groupId}`
+        );
       }
     }
-
     console.log(`User ${userId} successfully removed from all groups.`);
   } catch (error) {
     console.error("Error deleting user data:", error);
@@ -97,26 +110,21 @@ async function deleteUserData(userId) {
 
 
 
-// Helper function to delete user document and its subcollections
+// Helper function to delete user document in 'users' and its sub-collections
 async function deleteUserDocumentAndSubcollections(userDocRef) {
-  try {
-    // Define a list of subcollections to delete
-    const subcollectionsToDelete = ['groups']; // Add other subcollection names here if needed
+  // Define a list of sub-collections to delete
+  const subcollectionsToDelete = ["groups"]; // Add other sub-collection names here if needed
 
-    // Delete each specified subcollection
-    for (const subcollection of subcollectionsToDelete) {
-      const snapshot = await userDocRef.collection(subcollection).get();
-      const batch = db.batch();
-
-      snapshot.forEach(doc => {
-        batch.delete(doc.ref);
-      });
-
-      await batch.commit();
-      console.log(`Deleted subcollection '${subcollection}' for user ${userDocRef.id}`);
-    }
-  } catch (error) {
-    console.error("Error deleting user document and subcollections:", error);
-    throw error;
+  // Delete each specified sub-collection
+  for (const subcollection of subcollectionsToDelete) {
+    const snapshot = await userDocRef.collection(subcollection).get();
+    const batch = db.batch();
+    snapshot.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    await batch.commit();
+    console.log(
+      `Deleted sub-collection '${subcollection}' for user ${userDocRef.id}`
+    );
   }
 }

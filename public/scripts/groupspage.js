@@ -153,7 +153,7 @@ function loadUserGroups() {
 
       if (validGroupData.length === 0) {
         groupsContainer.innerHTML =
-          '<p class="text-center">You are not a member of any groups.</p>';
+          '<p class="text-center fill-space">You are not a member of any groups.</p>';
         return;
       }
 

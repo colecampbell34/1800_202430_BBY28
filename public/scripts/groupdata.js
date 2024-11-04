@@ -40,6 +40,7 @@ function loadGroupData() {
           document.getElementById("group-name").textContent = groupData.groupname || "Unnamed Group";
           document.getElementById("group-goal").textContent = groupData.max || "0";
           document.getElementById("current-amount").textContent = groupData.current || "0";
+          document.getElementById("deadline-goes-here").textContent = groupData.deadline || "N/A";
   
           // Update progress bar
           const progressPercentage = (groupData.current / groupData.max) * 100;
