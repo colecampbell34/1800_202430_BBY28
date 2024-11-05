@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CollectiveCoin</title>
+    <meta name="comp1800 template" content="My 1800 App" />
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Boostrap Library JS CDN  go here -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Other libraries go here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="./styles/filling.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+     <link rel="stylesheet" href="/styles/colorforpages.css"/>
+  </head>
+
+  <body>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+
+    <!--header-->
+    <div id="header" class="sticky-top"></div>
+
+    <!-- Expenses Section -->
+    <div class="container mt-5 mb-5 fill-space">
+      <h2 class="text-center mb-4">Expenses</h2>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <!-- Total Monthly Income -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-cash-stack me-2"></i>Total Monthly Income
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Food and Beverage -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-cup-hot me-2"></i>Food and Beverage
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gas -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-fuel-pump me-2"></i>Gas
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Car Maintenance and Insurance -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-car-front me-2"></i>Car Maintenance and
+                Insurance
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rent or Mortgage -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-house me-2"></i>Rent or Mortgage
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Phone Plan -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-phone me-2"></i>Monthly Phone Plan
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entertainment -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-film me-2"></i>Entertainment
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shopping -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title"><i class="bi bi-bag me-2"></i>Shopping</h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Spend -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-currency-dollar me-2"></i>Total Spend
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Remaining Disposable Income -->
+        <div class="col">
+          <div class="card p-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-piggy-bank me-2"></i>Remaining Disposable Income
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add New Expense Button -->
+        <div class="col text-center">
+          <input
+            type="button"
+            value="Add New Expense"
+            class="btn btn-primary mt-3"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!--footer by Cole-->
+    <div id="navbar" class="sticky-bottom"></div>
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <!-- Link to scripts of your own -->
+    <script src="/scripts/font.js"></script>
+    <script src="/scripts/skeleton.js"></script>
+  </body>
+</html>
