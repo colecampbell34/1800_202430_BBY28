@@ -55,6 +55,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
             joinCode: joinCode,
             groupName: groupData.groupname || "Unnamed Group", // Optional: Group name
             max: groupData.max / groupData.size, // User's max goal in this group
+            deadline: groupDate
           });
         })
         .then(() => {

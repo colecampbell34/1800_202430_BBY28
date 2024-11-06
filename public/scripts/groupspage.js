@@ -54,7 +54,7 @@ document
               batch.set(db.doc(userGroupPath), {
                 joinCode: joinCode,
                 groupName: doc.data().groupname || "Unnamed Group", // Optional: Add group name
-                max: individualMax, // Optional: Add the user's max goal in this group
+                max: individualMax,
                 deadline: deadline,
               });
 
