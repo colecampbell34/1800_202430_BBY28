@@ -175,6 +175,9 @@ function recalculateMaxForMembers(groupId) {
     } else {
       alert("Please enter a valid goal amount.");
     }
+    setTimeout(() => {
+      location.reload();
+    }, 500)
   });
 
 
@@ -230,6 +233,9 @@ function recalculateMaxForMembers(groupId) {
     } else {
       alert("Please enter a valid contribution amount.");
     }
+    setTimeout(() => {
+      location.reload();
+    }, 500)
   });
 
 
