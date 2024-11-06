@@ -113,7 +113,7 @@ async function deleteUserData(userId) {
 // Helper function to delete user document in 'users' and its sub-collections
 async function deleteUserDocumentAndSubcollections(userDocRef) {
   // Define a list of sub-collections to delete
-  const subcollectionsToDelete = ["groups"]; // Add other sub-collection names here if needed
+  const subcollectionsToDelete = ["groups", "expenses"]; // Add other sub-collection names here if needed
 
   // Delete each specified sub-collection
   for (const subcollection of subcollectionsToDelete) {
