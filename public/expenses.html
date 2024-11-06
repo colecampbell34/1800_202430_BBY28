@@ -32,6 +32,17 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
     />
      <link rel="stylesheet" href="/styles/colorforpages.css"/>
+
+     <!-------------------------------------------------------->
+    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+    <!-------------------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
   </head>
 
   <body>
@@ -41,131 +52,140 @@
 
     <!--header-->
     <div id="header" class="sticky-top"></div>
-
-    <!-- Expenses Section -->
-    <div class="container mt-5 mb-5 fill-space">
-      <h2 class="text-center mb-4">Expenses</h2>
-
-      <div class="row row-cols-1 row-cols-md-2 g-4">
-        <!-- Total Monthly Income -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-cash-stack me-2"></i>Total Monthly Income
-              </h5>
+   
+      <!-- Expenses Section -->
+      <div class="container mt-5 mb-5 fill-space">
+        <h2 class="text-center mb-4">Expenses</h2>
+  
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <!-- Total Monthly Income -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-cash-stack me-2"></i>Total Daily Income
+                </h5>
+                <input type="text" id="income" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Food and Beverage -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-cup-hot me-2"></i>Food and Beverage
-              </h5>
+  
+          <!-- Food and Beverage -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-cup-hot me-2"></i>Food and Beverage
+                </h5>
+                <input type="text" id="food" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Gas -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-fuel-pump me-2"></i>Gas
-              </h5>
+  
+          <!-- Gas -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-fuel-pump me-2"></i>Gas
+                </h5>
+                <input type="text" id="gas" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Car Maintenance and Insurance -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-car-front me-2"></i>Car Maintenance and
-                Insurance
-              </h5>
+  
+          <!-- Car Maintenance and Insurance -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-car-front me-2"></i>Car Maintenance and
+                  Insurance
+                </h5>
+                <input type="text" id="car" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Rent or Mortgage -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-house me-2"></i>Rent or Mortgage
-              </h5>
+  
+          <!-- Rent or Mortgage -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-house me-2"></i>Rent or Mortgage
+                </h5>
+                <input type="text" id="rent" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Monthly Phone Plan -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-phone me-2"></i>Monthly Phone Plan
-              </h5>
+  
+          <!-- Monthly Phone Plan -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-phone me-2"></i>Monthly Phone Plan
+                </h5>
+                <input type="text" id="phone" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Entertainment -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-film me-2"></i>Entertainment
-              </h5>
+  
+          <!-- Entertainment -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-film me-2"></i>Entertainment
+                </h5>
+                <input type="text" id="entertainment" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Shopping -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title"><i class="bi bi-bag me-2"></i>Shopping</h5>
+          <!-- Shopping-->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-bag me-2"></i>Shopping
+                </h5>
+                <input type="text" id="shopping" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Total Spend -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-currency-dollar me-2"></i>Total Spend
-              </h5>
+  
+          <!-- Total Spend -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-cash-coin me-2"></i>Other Fees
+                </h5>
+                <input type="text" id="fees" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Remaining Disposable Income -->
-        <div class="col">
-          <div class="card p-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-piggy-bank me-2"></i>Remaining Disposable Income
-              </h5>
+  
+          <!-- Remaining Disposable Income -->
+          <div class="col">
+            <div class="card p-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-wrench-adjustable me-2"></i>Other Service Payments
+                </h5>
+                <input type="text" id="service" name="quantity" placeholder="0.00">
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Add New Expense Button -->
-        <div class="col text-center">
-          <input
-            type="button"
-            value="Add New Expense"
-            class="btn btn-primary mt-3"
-          />
+  
+          <!-- Add New Expense Button -->
+          <div class="col text-center">
+            <button type="button" class="btn btn-primary mt-3" onclick="submitAmounts()">Add New Expense</button>
+          </div>
         </div>
       </div>
-    </div>
+  
 
     <!--footer by Cole-->
     <div id="navbar" class="sticky-bottom"></div>
@@ -177,5 +197,7 @@
     <!-- Link to scripts of your own -->
     <script src="/scripts/font.js"></script>
     <script src="/scripts/skeleton.js"></script>
+    <script src="/scripts/expenses.js"></script>
+    <script src="/scripts/firebaseAPI_BBY28.js"></script>
   </body>
 </html>
