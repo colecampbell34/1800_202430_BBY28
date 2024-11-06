@@ -220,6 +220,8 @@ function recalculateMaxForMembers(groupId) {
                   console.log("Member contribution updated to:", newContribution);
                 });
             });
+          // Update contribution in budget-sheets
+          db.collection("users").doc(userId).collection("groups").doc(groupId).set({currentContribution: updatedAmount}, {merge: true});
         }
       })
       .catch((error) => {
@@ -231,4 +233,4 @@ function recalculateMaxForMembers(groupId) {
   });
 
 
-  window.onload = loadGroupData() // Load the data on load
+  window.onload = loadGroupData(); // Load the data on load

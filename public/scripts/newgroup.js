@@ -23,7 +23,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     deadline: groupDate,
     size: 1,
     current: 0,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
   };
 
   // Write to Firestore using the join code as the collection name

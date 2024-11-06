@@ -23,6 +23,7 @@ document
           const userName =
             firebase.auth().currentUser.displayName || "Anonymous";
           const totalGoal = doc.data().max; // Group's total goal
+          const deadline = doc.data().deadline || "No deadline set"; // Group's deadline
 
           // Get the number of members in the group-members subcollection
           db.collection("budget-sheets")
@@ -54,6 +55,7 @@ document
                 joinCode: joinCode,
                 groupName: doc.data().groupname || "Unnamed Group", // Optional: Add group name
                 max: individualMax, // Optional: Add the user's max goal in this group
+                deadline: deadline,
               });
 
               // Update all existing members with the new max
@@ -136,6 +138,7 @@ function loadUserGroups() {
               // User is a member, fetch group data
               const groupData = doc.data();
               groupData.id = doc.id; // Add the document ID to groupData
+              groupData.currentContribution = memberDoc.data().contribution; // Add member contribution to groupData
               return groupData; // Return group data
             } else {
               return null; // User is not a member
@@ -189,6 +192,7 @@ function createGroupCard(groupData, groupId, template) {
   cardClone.querySelector(".group-goal").textContent = groupData.max || "N/A";
   cardClone.querySelector(".group-contribution").textContent =
     groupData.currentContribution || "0";
+  cardClone.querySelector(".group-deadline").textContent = groupData.deadline;
 
   // Attach event listener for the view details button
   cardClone.querySelector(".view-details-btn").onclick = () =>

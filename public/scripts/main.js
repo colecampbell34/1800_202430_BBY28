@@ -17,3 +17,10 @@ function getNameFromAuth() {
   });
 }
 getNameFromAuth(); //run the function
+
+// Retrieve groups collection a user is in and find nearest trip date
+const userId = firebaseConfigbase.auth().currentUser.uid;
+const groups = db.collection("users").doc(userId).collection("groups");
+function findNearestDeadline(groups) {
+
+}
