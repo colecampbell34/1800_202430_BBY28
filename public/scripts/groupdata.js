@@ -55,7 +55,7 @@ function loadGroupData() {
           document.getElementById("joinCode-goes-here").innerHTML = groupId;
           
           // Load expense breakdown if needed
-        //   loadExpenseBreakdown(groupData.expenses, groupData.max);           // UPDATE THIS (BREAKDOWN OF COSTS)
+        //   loadExpenseBreakdown(groupData.expenses, groupData.max);
         } else {
           console.error("Group document not found.");
         }
