@@ -32,11 +32,7 @@ body {
         justify-content: center;
         align-items: center;
     }
-    .container-fluid{
-      display:fixed;
-      background:rgba(119, 116, 116, 0.5)
-    }
-  
+    
     .modal-content {
         background: white;
         padding: 20px;

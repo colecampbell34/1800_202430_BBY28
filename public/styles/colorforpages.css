@@ -1,12 +1,4 @@
 /* color message: #454D66 #309975 #58B368 #DAD873 #EFEEB4 */
-.btn-primary {
-  background-color: #58b368;
-  border: #58b368;
-}
-.btn-danger {
-  background-color: rgb(238, 207, 69);
-  border: rgb(238, 207, 69);
-}
 body {
   background-color: #f7f7db;
 }

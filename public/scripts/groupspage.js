@@ -192,7 +192,7 @@ function createGroupCard(groupData, groupId, template) {
   cardClone.querySelector(".group-goal").textContent = groupData.max || "N/A";
   cardClone.querySelector(".group-contribution").textContent =
     groupData.currentContribution || "0";
-  cardClone.querySelector(".group-deadline").textContent = groupData.deadline;
+  cardClone.querySelector(".group-deadline").textContent = groupData.deadline || "N/A";
 
   // Attach event listener for the view details button
   cardClone.querySelector(".view-details-btn").onclick = () =>
