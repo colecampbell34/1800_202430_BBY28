@@ -1,95 +1,62 @@
-// Handle form submission for joining a group
 document
   .getElementById("joinGroupForm")
   .addEventListener("submit", function (e) {
-    e.preventDefault(); // Prevent the form from submitting traditionally
+    e.preventDefault();
 
-    // Get the join code from input
     const joinCode = document.getElementById("joinCode").value.trim();
 
-    // Validate the join code
     if (joinCode === "") {
       alert("Please enter a join code.");
       return;
     }
 
-    // Check if a group with the join code exists in Firestore
     db.collection("budget-sheets")
-      .doc(joinCode)
+      .where("code", "==", joinCode)
       .get()
-      .then((doc) => {
-        if (doc.exists) {
+      .then((querySnapshot) => {
+        if (!querySnapshot.empty) {
+          const doc = querySnapshot.docs[0];
+          const docRef = doc.ref; // Reference to the budget-sheets document
           const userId = firebase.auth().currentUser.uid;
-          const userName =
-            firebase.auth().currentUser.displayName || "Anonymous";
-          const totalGoal = doc.data().max; // Group's total goal
-          const deadline = doc.data().deadline || "No deadline set"; // Group's deadline
+          const userName = firebase.auth().currentUser.displayName || "Anonymous";
+          const totalGoal = doc.data().max;
+          const deadline = doc.data().deadline || "No deadline set";
 
-          // Get the number of members in the group-members subcollection
-          db.collection("budget-sheets")
-            .doc(joinCode)
+          docRef
             .collection("group-members")
             .get()
             .then((membersSnapshot) => {
-              const groupSize = membersSnapshot.size + 1; // Including the new member
-              const individualMax = totalGoal / groupSize; // Calculate max per member
+              const groupSize = membersSnapshot.size + 1;
+              const individualMax = totalGoal / groupSize;
 
-              // Add the current user to the group-members subcollection
               const groupMemberData = {
-                name: userName, // User's name (or default to "Anonymous")
-                contribution: 0, // Initial contribution
-                max: individualMax, // Individual max goal
+                name: userName,
+                contribution: 0,
+                max: individualMax,
               };
 
-              const groupPath = `budget-sheets/${joinCode}/group-members/${userId}`;
+              const groupPath = `${docRef.path}/group-members/${userId}`;
               const userGroupPath = `users/${userId}/groups/${joinCode}`;
 
-              // Perform both operations: add user to group-members and update user groups
               const batch = db.batch();
-
-              // Add the user to the group-members subcollection
               batch.set(db.doc(groupPath), groupMemberData);
-
-              // Add the join code to the user's groups collection
               batch.set(db.doc(userGroupPath), {
-                joinCode: joinCode,
-                groupName: doc.data().groupname || "Unnamed Group", // Optional: Add group name
+                groupName: doc.data().groupname || "Unnamed Group",
                 max: individualMax,
                 deadline: deadline,
               });
 
-              // Update all existing members with the new max
-              membersSnapshot.forEach((memberDoc) => {
-                const memberId = memberDoc.id; // Existing member's ID
-                const updatedMemberData = {
-                  max: totalGoal / groupSize, // New max per member
-                };
-                batch.update(
-                  db.doc(`budget-sheets/${joinCode}/group-members/${memberId}`),
-                  updatedMemberData
-                );
-              });
-
-              // Commit the batch operation
               batch
                 .commit()
                 .then(() => {
-                  // Update the size of the group in the budget-sheets document
-                  return db
-                    .collection("budget-sheets")
-                    .doc(joinCode)
-                    .update({ size: groupSize });
+                  return docRef.update({ size: groupSize }); // Update size using docRef directly
                 })
                 .then(() => {
                   alert("Successfully joined group: " + doc.data().groupname);
-                  // Redirect to a relevant page or update UI
                   window.location.href = "groups.html";
                 })
                 .catch((error) => {
-                  console.error(
-                    "Error adding user to group or user groups: ",
-                    error
-                  );
+                  console.error("Error adding user to group or user groups: ", error);
                   alert("Error joining group. Please try again.");
                 });
             })
@@ -106,6 +73,9 @@ document
         alert("Error joining group. Please try again later.");
       });
   });
+
+
+
 
 
 

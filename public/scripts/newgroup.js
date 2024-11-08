@@ -3,6 +3,7 @@ function generateJoinCode() {
   return Math.floor(10000 + Math.random() * 90000).toString();
 }
 
+
 // Handle form submission
 document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault(); // Prevent the form from submitting the traditional way
@@ -23,14 +24,15 @@ document.querySelector("form").addEventListener("submit", (e) => {
     deadline: groupDate,
     size: 1,
     current: 0,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    code: joinCode,
   };
+
 
   // Write to Firestore using the join code as the collection name
   db.collection("budget-sheets")
-    .doc(joinCode)
-    .set(groupData)
-    .then(() => {
+    .add(groupData)
+    .then((docRef) => {
+      // docRef creates a reference to the newly created group doc id
       console.log("New group created with join code:", joinCode);
 
       // Assuming `userId` is the ID of the currently logged-in user
@@ -38,8 +40,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
       const userName = firebase.auth().currentUser.displayName;
 
       // Create a `group-members` subcollection with the user's ID
-      db.collection("budget-sheets")
-        .doc(joinCode)
+      docRef
         .collection("group-members")
         .doc(userId)
         .set({
@@ -52,10 +53,9 @@ document.querySelector("form").addEventListener("submit", (e) => {
           const userGroupPath = `users/${userId}/groups/${joinCode}`;
 
           return db.doc(userGroupPath).set({
-            joinCode: joinCode,
             groupName: groupData.groupname || "Unnamed Group", // Optional: Group name
             max: groupData.max / groupData.size, // User's max goal in this group
-            deadline: groupDate
+            deadline: groupDate,
           });
         })
         .then(() => {
