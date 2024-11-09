@@ -57,125 +57,42 @@
       <div class="container mt-5 mb-5 fill-space">
         <h2 class="text-center mb-4">Expenses</h2>
   
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <!-- Total Monthly Income -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-cash-stack me-2"></i>Total Daily Income
-                </h5>
-                <input type="number" id="income" name="quantity" placeholder="0.00">
-              </div>
+        <div class="row row-cols-1 g-4">
+          <!-- Total Income -->
+          <div class="col" style="padding-left: 30%;">
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <label><i class="bi bi-cash-stack me-2"></i>Total Income</label>
+                  <input type="number" id="income" name="quantity" placeholder="0.00" style="margin-left: 8.5%;">
+                </div>
             </div>
           </div>
   
-          <!-- Food and Beverage -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-cup-hot me-2"></i>Food and Beverage
-                </h5>
-                <input type="number" id="food" name="quantity" placeholder="0.00">
-              </div>
+          <!-- Total Expenses-->
+          <div class="col" style="padding-left: 30%;">
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <label><i class="bi bi-cart me-2"></i>Total Expenses</label>
+                  <input type="number" id="expenses" name="quantity" placeholder="0.00" style="margin-left: 6%;">
+                </div>
             </div>
           </div>
-  
-          <!-- Gas -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-fuel-pump me-2"></i>Gas
-                </h5>
-                <input type="number" id="gas" name="quantity" placeholder="0.00">
-              </div>
+          <!-- Total Distributions-->
+          <div class="col" style="padding-left: 30%;">
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <label><i class="bi bi-check-circle me-2"></i>Total Distributions</label>
+                  <input type="number" id="distributions" name="quantity" placeholder="0.00" style="margin-left: 2%;" readonly>
+                </div>
             </div>
           </div>
-  
-          <!-- Car Maintenance and Insurance -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-car-front me-2"></i>Car Maintenance and
-                  Insurance
-                </h5>
-                <input type="number" id="car" name="quantity" placeholder="0.00">
-              </div>
-            </div>
-          </div>
-  
-          <!-- Rent or Mortgage -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-house me-2"></i>Rent or Mortgage
-                </h5>
-                <input type="number" id="rent" name="quantity" placeholder="0.00">
-              </div>
-            </div>
-          </div>
-  
-          <!-- Monthly Phone Plan -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-phone me-2"></i>Monthly Phone Plan
-                </h5>
-                <input type="number" id="phone" name="quantity" placeholder="0.00">
-              </div>
-            </div>
-          </div>
-  
-          <!-- Entertainment -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-film me-2"></i>Entertainment
-                </h5>
-                <input type="number" id="entertainment" name="quantity" placeholder="0.00">
-              </div>
-            </div>
-          </div>
-
-          <!-- Shopping-->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-bag me-2"></i>Shopping
-                </h5>
-                <input type="number" id="shopping" name="quantity" placeholder="0.00">
-              </div>
-            </div>
-          </div>
-  
-          <!-- Total Spend -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-cash-coin me-2"></i>Other Fees
-                </h5>
-                <input type="number" id="fees" name="quantity" placeholder="0.00">
-              </div>
-            </div>
-          </div>
-  
-          <!-- Remaining Disposable Income -->
-          <div class="col">
-            <div class="card p-3 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-wrench-adjustable me-2"></i>Other Service Payments
-                </h5>
-                <input type="number" id="service" name="quantity" placeholder="0.00">
-              </div>
+          <!-- Total Remainings-->
+          <div class="col"  style="padding-left: 30%;">
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <label><i class="bi bi-piggy-bank me-2"></i>Total Remainings</label>
+                  <input type="number" id="remainings" name="quantity" placeholder="0.00" style="margin-left: 3%;" readonly>
+                </div>
             </div>
           </div>
   
