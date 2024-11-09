@@ -15,9 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   } else {
     recalculateMaxForMembers(groupId); // Call the function to recalculate on page load
+    loadGroupData();
   }
-  // Load the group data using the groupId
-  // console.log("Group ID:", groupId);
 });
 
 
@@ -60,10 +59,12 @@ function loadGroupData() {
         loadGroupMembers(groupId);
 
         // Show join code
-        document.getElementById("joinCode-goes-here").innerHTML = groupData.code;
+        document.getElementById("joinCode-goes-here").innerHTML =
+          groupData.code;
 
-        // Load expense breakdown if needed
-        //   loadExpenseBreakdown(groupData.expenses, groupData.max);
+        // Load expense breakdown
+        loadExpenseBreakdown();
+
       } else {
         console.error("Group document not found.");
       }
@@ -107,24 +108,6 @@ function loadGroupMembers(groupId) {
       console.error("Error fetching group members: ", error);
     });
 }
-
-
-
-// // Optional: Function to load the expense breakdown if data is structured for it
-// function loadExpenseBreakdown(expenses, max) {
-//   const expenseTableBody = document.querySelector("table.table-striped tbody");
-//   expenseTableBody.innerHTML = ""; // Clear any existing rows
-
-//   expenses.forEach((expense) => {
-//     const row = document.createElement("tr");
-//     row.innerHTML = `
-//         <td>${expense.category}</td>
-//         <td>$${expense.amount}</td>
-//         <td>${((expense.amount / max) * 100).toFixed(2)}%</td>
-//       `;
-//     expenseTableBody.appendChild(row);
-//   });
-// }
 
 
 
@@ -178,11 +161,12 @@ document.querySelector("#adjustGoal + button").addEventListener("click", () => {
         max: newGoal,
       })
       .then(() => recalculateMaxForMembers(groupId)) // Wait for recalculation
+      .then(() => recalculateAllocations()) // Wait for another recalculation
       .then(() => loadGroupData()) // Load data after recalculation completes
       .then(() => {
         // console.log("Goal and member maxes updated successfully!");
         alert("Goal updated successfully!");
-        setTimeout(() => location.reload(), 1000);
+        // setTimeout(() => location.reload(), 1000);
       })
       .catch((error) => {
         console.error("Error updating group goal:", error);
@@ -271,11 +255,158 @@ document
     } else {
       alert("Please enter a valid contribution amount.");
     }
-    setTimeout(() => {
-      location.reload();
-    }, 500);
+    // setTimeout(() => {
+    //   location.reload();
+    // }, 500);
   });
 
 
 
-window.onload = loadGroupData();
+
+
+  // When user clicks the add allocation button
+function addAllocation() {
+  const category = prompt("Enter expense category:");
+  const amount = parseFloat(prompt("Enter allocated amount:"));
+
+  if (category && !isNaN(amount) && amount > 0) {
+    addAllocationData(category, amount);
+  } else {
+    alert("Please enter valid details.");
+  }
+}
+
+
+
+// This function loads if the user put in valid info
+function addAllocationData(category, amount) {
+  // Validate category and amount
+  if (!category || isNaN(amount)) {
+    console.error("Invalid input: category or amount is missing or incorrect.");
+    alert("Please enter a valid category and amount.");
+    return;
+  }
+
+  const goal = parseFloat(document.getElementById("group-goal").innerText);
+  const percentage = ((amount / goal) * 100).toFixed(2);
+
+  const groupId = getGroupIdFromURL("joinCode");
+  const groupRef = db.collection("budget-sheets").doc(groupId);
+
+  // Prepare the data for the Firestore document
+  const allocationData = {
+    category: category,
+    amount: amount,
+    percentage: percentage,
+  };
+
+  // Add allocation to the "expenseBreakdown" subcollection within the group document
+  groupRef
+    .collection("expenseBreakdown")
+    .add(allocationData)
+    .then(() => {
+      console.log("Allocation added successfully!");
+      loadExpenseBreakdown();
+    })
+    .catch((error) => {
+      console.error("Error adding allocation:", error);
+    });
+}
+
+
+
+function recalculateAllocations() {
+  const groupId = getGroupIdFromURL("joinCode");
+  const groupRef = db.collection("budget-sheets").doc(groupId);
+
+  groupRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const goal = parseFloat(doc.data().max); // Current group goal
+        if (!isNaN(goal) && goal > 0) {
+          // Fetch all allocations in the expenseBreakdown subcollection
+          groupRef.collection("expenseBreakdown")
+            .get()
+            .then((querySnapshot) => {
+              const batch = db.batch(); // Use batch to update all docs together
+
+              querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const newPercentage = ((data.amount / goal) * 100).toFixed(2); // Recalculate percentage
+
+                // Update each allocation with the new percentage
+                const allocationRef = groupRef.collection("expenseBreakdown").doc(doc.id);
+                batch.update(allocationRef, { percentage: newPercentage });
+              });
+
+              // Commit the batch update
+              return batch.commit();
+            })
+            .then(() => {
+              console.log("All allocations recalculated successfully.");
+              loadExpenseBreakdown(); // Reload the table with updated data
+            })
+            .catch((error) => {
+              console.error("Error recalculating allocations:", error);
+            });
+        } else {
+          console.error("Invalid goal value for recalculations.");
+        }
+      } else {
+        console.error("Group not found.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching group data:", error);
+    });
+}
+
+
+
+function loadExpenseBreakdown() {
+  const groupId = getGroupIdFromURL("joinCode");
+  const groupRef = db.collection("budget-sheets").doc(groupId);
+  const expenseTableBody = document.getElementById("expense-table-body");
+
+  // Clear the table body to avoid duplicates
+  expenseTableBody.innerHTML = "";
+
+  // Fetch expense breakdown data
+  groupRef.collection("expenseBreakdown")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+
+        // Create a new row with expense data
+        const row = document.createElement("tr");
+
+        // Add the expense category
+        const categoryCell = document.createElement("td");
+        categoryCell.textContent = data.category;
+        row.appendChild(categoryCell);
+
+        // Add the allocated amount
+        const amountCell = document.createElement("td");
+        amountCell.textContent = `$${data.amount.toFixed(2)}`;
+        row.appendChild(amountCell);
+
+        // Add the percentage of the goal
+        const percentageCell = document.createElement("td");
+        percentageCell.textContent = `${data.percentage}%`;
+        row.appendChild(percentageCell);
+
+        // Append the row to the table body
+        expenseTableBody.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error("Error loading expense breakdown:", error);
+    });
+}
+
+
+
+
+// window.onload = loadGroupData();
