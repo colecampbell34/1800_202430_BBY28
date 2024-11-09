@@ -79,7 +79,7 @@
       <h2 class="text-center mb-4">My Groups</h2>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
-        <!-- Card Template (Hidden) -->
+        <!-- Card Template -->
         <div class="col d-none" id="groupCardTemplate">
           <div class="card shadow-sm">
             <div class="card-body">
@@ -95,9 +95,14 @@
                 ></span><br/>
                 <strong>Deadline Date:</strong> <span class="group-deadline"></span>
               </p>
-              <button class="btn btn-success view-details-btn">
-                View Details
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-success view-details-btn">
+                  View Details
+                </button>
+                <button class="btn btn-outline-danger leave-group-btn">
+                  Leave Group
               </button>
+              </div>
             </div>
           </div>
         </div>

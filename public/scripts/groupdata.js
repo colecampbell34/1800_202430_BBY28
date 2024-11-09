@@ -226,19 +226,10 @@ document
                   .update({ contribution: newContribution });
               });
 
-            // Update the user's contribution in the users/groups subcollection
-            const updateUserCurrentContribution = db
-              .collection("users")
-              .doc(userId)
-              .collection("groups")
-              .doc(groupId)
-              .set({ currentContribution: updatedAmount }, { merge: true });
-
             // Wait for all updates to complete before reloading data
             return Promise.all([
               updateGroupAmount,
               updateUserContribution,
-              updateUserCurrentContribution,
             ]);
           } else {
             throw new Error("Group document not found.");
@@ -255,9 +246,6 @@ document
     } else {
       alert("Please enter a valid contribution amount.");
     }
-    // setTimeout(() => {
-    //   location.reload();
-    // }, 500);
   });
 
 
@@ -397,6 +385,22 @@ function loadExpenseBreakdown() {
         percentageCell.textContent = `${data.percentage}%`;
         row.appendChild(percentageCell);
 
+        // Button to remove the allocation
+        const removeCell = document.createElement("td");
+        const removeButton = document.createElement("button");
+        removeButton.classList.add("btn", "btn-outline-danger", "mt-2");
+        removeButton.textContent = "Remove";
+
+        // Add event listener for remove button
+        removeButton.addEventListener("click", () => {
+          removeAllocation(doc.id);
+        });
+
+        // Add remove button to the table
+        removeCell.appendChild(removeButton);
+        row.appendChild(removeCell);
+
+
         // Append the row to the table body
         expenseTableBody.appendChild(row);
       });
@@ -408,5 +412,19 @@ function loadExpenseBreakdown() {
 
 
 
+function removeAllocation(allocationId) {
+  const groupId = getGroupIdFromURL("joinCode"); // Get group ID from URL
 
-// window.onload = loadGroupData();
+  db.collection("budget-sheets")
+    .doc(groupId)
+    .collection("expenseBreakdown")
+    .doc(allocationId)
+    .delete()
+    .then(() => {
+      console.log("Allocation removed successfully!");
+      loadExpenseBreakdown(); // Reload the table to update the UI
+    })
+    .catch((error) => {
+      console.error("Error removing allocation:", error);
+    });
+}
