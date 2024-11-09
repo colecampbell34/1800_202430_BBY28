@@ -46,7 +46,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
     />
-     <link rel="stylesheet" href="/styles/colorforpages.css"/>
+    <link rel="stylesheet" href="/styles/colorforpages.css" />
   </head>
 
   <body>
@@ -57,9 +57,21 @@
     <!--header-->
     <div id="header" class="sticky-top"></div>
 
-    <!-- Join Group Section (Top Right Corner) -->
     <div class="container mt-3">
-      <div class="row justify-content-end">
+      <div class="row justify-content-between">
+        <!-- Total Remaining (Top Left Corner) -->
+        <div class="col-auto">
+          <div class="card border-success shadow-sm p-3" style="max-width: 300px">
+            <div class="form-group">
+              <label class="form-label text-success">
+                <i class="bi bi-piggy-bank me-2"></i>Total Remaining: $
+              </label>
+              <span id="remaining" class="ms-2 fw-bold text-success" style="display: inline-block;"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Join Group Section (Top Right Corner) -->
         <div class="col-auto">
           <form id="joinGroupForm" class="d-flex">
             <input
@@ -89,11 +101,13 @@
               </h5>
               <p class="card-text">
                 <strong>Group Goal:</strong> $<span class="group-goal"></span
-                ><br/>
-                <strong>Contribution to Date:</strong> $<span
+                ><br />
+                <strong>Current Amount:</strong> $<span
                   class="group-contribution"
-                ></span><br/>
-                <strong>Deadline Date:</strong> <span class="group-deadline"></span>
+                ></span
+                ><br />
+                <strong>Deadline Date:</strong>
+                <span class="group-deadline"></span>
               </p>
               <div class="d-flex justify-content-between">
                 <button class="btn btn-success view-details-btn">
@@ -101,7 +115,7 @@
                 </button>
                 <button class="btn btn-outline-danger leave-group-btn">
                   Leave Group
-              </button>
+                </button>
               </div>
             </div>
           </div>

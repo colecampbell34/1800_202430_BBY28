@@ -1,3 +1,4 @@
+// Join a group with the join code
 document
   .getElementById("joinGroupForm")
   .addEventListener("submit", function (e) {
@@ -85,9 +86,7 @@ document
 // Fetch groups for the current user and populate the group cards
 function loadUserGroups() {
   const userId = firebase.auth().currentUser.uid; // Get the current user's ID
-  const groupsContainer = document.querySelector(
-    ".row.row-cols-1.row-cols-md-2.row-cols-lg-2.g-4"
-  ); // Select the container for the group cards
+  const groupsContainer = document.querySelector(".row.row-cols-1.row-cols-md-2.row-cols-lg-2.g-4"); // Select the container for the group cards
   const groupCardTemplate = document.getElementById("groupCardTemplate"); // Select the card template
 
   // Reference to the budget-sheets collection to find groups the user is part of
@@ -205,60 +204,6 @@ function leaveGroup(groupId) {
   }
 
   const groupDocRef = db.collection("budget-sheets").doc(groupId);
-
-  // Start by getting the user's contribution and the group's current value
-  groupDocRef
-    .get()
-    .then((groupDoc) => {
-      if (groupDoc.exists) {
-        const joinCode = groupDoc.data().code; // Fetch the join code here
-        console.log("Join code: ", joinCode);
-
-        // Remove the groups document from the users/groups subcollection
-        db.collection("users")
-          .doc(userId)
-          .collection("groups")
-          .doc(joinCode)
-          .delete();
-      } else {
-        console.error("Group document does not exist.");
-      }
-    })
-    .then(() => {
-      // const groupCurrent = groupDocRef.current;
-      const userCurrent = groupDocRef.collection("group-members").doc(userId).contribution;
-      console.log("User current: ", userCurrent);
-      // set groupDocRef.current = groupCurrent - userCurrent;
-      console.log("Trying to change value");
-      return groupDocRef.update({
-        current: firebase.firestore.FieldValue.increment(-userCurrent),
-      });
-    })
-    .then(() => {
-      // After updating the group's current amount, remove the user from the group's members collection
-      return groupDocRef.collection("group-members").doc(userId).delete();
-    })
-    .then(() => {
-      alert("You have successfully left the group.");
-      location.reload(); // Reload or redirect as needed
-    })
-    .catch((error) => {
-      console.error("Error removing user from group:", error);
-      alert("An error occurred while leaving the group.");
-    });
-}
-
-
-// Function to handle leaving the group
-function leaveGroup(groupId) {
-  const userId = firebase.auth().currentUser.uid;
-
-  if (!groupId || !userId) {
-    console.error("Group ID or User ID is missing.");
-    return;
-  }
-
-  const groupDocRef = db.collection("budget-sheets").doc(groupId);
   let joinCode;
 
   // Start by getting the user's contribution and the group's current value
@@ -309,9 +254,26 @@ function leaveGroup(groupId) {
 
 
 
+// Load Remaining Value on Page Load
+function loadRemaining() {
+  const userId = firebase.auth().currentUser.uid;
+  const expensesRef = db.collection("users").doc(userId).collection("expenses").doc("expensesDoc");
+
+  expensesRef.get().then((doc) => {
+    if (doc.exists) {
+      document.getElementById("remaining").textContent = doc.data().remaining.toFixed(2) || 0;
+    }
+  }).catch((error) => {
+    console.error("Error loading remaining:", error);
+  });
+}
+
+
+
 // Call the function to load user groups when the page loads
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    loadRemaining(); // User is signed in, load remaining balance
     loadUserGroups(); // User is signed in, load user groups
   } else {
     console.log("No user is signed in.");

@@ -6,6 +6,7 @@ function getGroupIdFromURL(name) {
 
 
 
+
 // Use this function to get the group ID when the page loads
 document.addEventListener("DOMContentLoaded", function () {
   const groupId = getGroupIdFromURL("joinCode");
@@ -14,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     alert("No group ID provided. Please go back and try again.");
     return;
   } else {
-    recalculateMaxForMembers(groupId); // Call the function to recalculate on page load
     loadGroupData();
   }
 });
+
 
 
 
@@ -64,7 +65,6 @@ function loadGroupData() {
 
         // Load expense breakdown
         loadExpenseBreakdown();
-
       } else {
         console.error("Group document not found.");
       }
@@ -76,38 +76,42 @@ function loadGroupData() {
 
 
 
+
 // Function to load members of the group
 function loadGroupMembers(groupId) {
   const membersList = document.querySelector(".card-body ul.list-group");
   membersList.innerHTML = ""; // Clear any existing members
 
-  db.collection("budget-sheets")
-    .doc(groupId)
-    .collection("group-members")
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        const member = doc.data();
+  recalculateMaxForMembers(groupId).then(() => {
+    db.collection("budget-sheets")
+      .doc(groupId)
+      .collection("group-members")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const member = doc.data();
 
-        // Create a list item for each member
-        const memberItem = document.createElement("li");
-        memberItem.classList.add(
-          "list-group-item",
-          "d-flex",
-          "justify-content-between",
-          "align-items-center"
-        );
-        memberItem.innerHTML = `
+          // Create a list item for each member
+          const memberItem = document.createElement("li");
+          memberItem.classList.add(
+            "list-group-item",
+            "d-flex",
+            "justify-content-between",
+            "align-items-center"
+          );
+          memberItem.innerHTML = `
             <span>${member.name || "Anonymous"}</span>
             <span>Contribution: $ (${member.contribution}/${member.max})</span>
           `;
-        membersList.appendChild(memberItem);
+          membersList.appendChild(memberItem);
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching group members: ", error);
       });
-    })
-    .catch((error) => {
-      console.error("Error fetching group members: ", error);
-    });
+  });
 }
+
 
 
 
@@ -129,7 +133,7 @@ function recalculateMaxForMembers(groupId) {
           .get()
           .then((snapshot) => {
             const groupSize = snapshot.size;
-            const newMaxPerMember = groupMax / groupSize;
+            const newMaxPerMember = (groupMax / groupSize).toFixed(2);
 
             const updatePromises = snapshot.docs.map((memberDoc) =>
               db
@@ -143,10 +147,11 @@ function recalculateMaxForMembers(groupId) {
             return Promise.all(updatePromises);
           });
       } else {
-        throw new Error("Group document not found.");
+        console.error("Group document not found.");
       }
     });
 }
+
 
 
 
@@ -175,6 +180,7 @@ document.querySelector("#adjustGoal + button").addEventListener("click", () => {
     alert("Please enter a valid goal amount.");
   }
 });
+
 
 
 
@@ -227,17 +233,34 @@ document
               });
 
             // Wait for all updates to complete before reloading data
-            return Promise.all([
-              updateGroupAmount,
-              updateUserContribution,
-            ]);
+            return Promise.all([updateGroupAmount, updateUserContribution]);
           } else {
-            throw new Error("Group document not found.");
+            console.error("Group document not found.");
           }
         })
         .then(() => {
+          const userRef = db
+            .collection("users")
+            .doc(userId)
+            .collection("expenses")
+            .doc("expensesDoc");
+
+          // Update the users remaining money when they contribute
+          userRef.get().then((doc) => {
+            // Amount they contributed
+            const contributionAmount = parseFloat(
+              document.getElementById("addContribution").value
+            );
+            // Current remaining amount
+            const currentRemaining = doc.data().remaining;
+            // Calculate what they have left after the contribution
+            const newRemaining = currentRemaining - contributionAmount;
+
+            return userRef.update({ remaining: newRemaining });
+          });
+        })
+        .then(() => {
           loadGroupData(); // Reload data after updates complete
-          // console.log("Contribution added successfully!");
           alert("Contribution added successfully!");
         })
         .catch((error) => {
@@ -251,8 +274,7 @@ document
 
 
 
-
-  // When user clicks the add allocation button
+// When user clicks the add allocation button
 function addAllocation() {
   const category = prompt("Enter expense category:");
   const amount = parseFloat(prompt("Enter allocated amount:"));
@@ -263,6 +285,7 @@ function addAllocation() {
     alert("Please enter valid details.");
   }
 }
+
 
 
 
@@ -303,6 +326,7 @@ function addAllocationData(category, amount) {
 
 
 
+
 function recalculateAllocations() {
   const groupId = getGroupIdFromURL("joinCode");
   const groupRef = db.collection("budget-sheets").doc(groupId);
@@ -314,7 +338,8 @@ function recalculateAllocations() {
         const goal = parseFloat(doc.data().max); // Current group goal
         if (!isNaN(goal) && goal > 0) {
           // Fetch all allocations in the expenseBreakdown subcollection
-          groupRef.collection("expenseBreakdown")
+          groupRef
+            .collection("expenseBreakdown")
             .get()
             .then((querySnapshot) => {
               const batch = db.batch(); // Use batch to update all docs together
@@ -324,7 +349,9 @@ function recalculateAllocations() {
                 const newPercentage = ((data.amount / goal) * 100).toFixed(2); // Recalculate percentage
 
                 // Update each allocation with the new percentage
-                const allocationRef = groupRef.collection("expenseBreakdown").doc(doc.id);
+                const allocationRef = groupRef
+                  .collection("expenseBreakdown")
+                  .doc(doc.id);
                 batch.update(allocationRef, { percentage: newPercentage });
               });
 
@@ -352,6 +379,7 @@ function recalculateAllocations() {
 
 
 
+
 function loadExpenseBreakdown() {
   const groupId = getGroupIdFromURL("joinCode");
   const groupRef = db.collection("budget-sheets").doc(groupId);
@@ -361,7 +389,8 @@ function loadExpenseBreakdown() {
   expenseTableBody.innerHTML = "";
 
   // Fetch expense breakdown data
-  groupRef.collection("expenseBreakdown")
+  groupRef
+    .collection("expenseBreakdown")
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -400,7 +429,6 @@ function loadExpenseBreakdown() {
         removeCell.appendChild(removeButton);
         row.appendChild(removeCell);
 
-
         // Append the row to the table body
         expenseTableBody.appendChild(row);
       });
@@ -409,6 +437,7 @@ function loadExpenseBreakdown() {
       console.error("Error loading expense breakdown:", error);
     });
 }
+
 
 
 
