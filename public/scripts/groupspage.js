@@ -18,7 +18,8 @@ document
           const doc = querySnapshot.docs[0];
           const docRef = doc.ref; // Reference to the budget-sheets document
           const userId = firebase.auth().currentUser.uid;
-          const userName = firebase.auth().currentUser.displayName || "Anonymous";
+          const userName =
+            firebase.auth().currentUser.displayName || "Anonymous";
           const totalGoal = doc.data().max;
           const deadline = doc.data().deadline || "No deadline set";
 
@@ -56,7 +57,10 @@ document
                   window.location.href = "groups.html";
                 })
                 .catch((error) => {
-                  console.error("Error adding user to group or user groups: ", error);
+                  console.error(
+                    "Error adding user to group or user groups: ",
+                    error
+                  );
                   alert("Error joining group. Please try again.");
                 });
             })
@@ -73,11 +77,6 @@ document
         alert("Error joining group. Please try again later.");
       });
   });
-
-
-
-
-
 
 // Load the group data onto the cards
 // Fetch groups for the current user and populate the group cards
@@ -149,8 +148,6 @@ function loadUserGroups() {
     });
 }
 
-
-
 // Create a card element for a group using the template
 function createGroupCard(groupData, groupId, template) {
   const cardClone = template.cloneNode(true); // Clone the template
@@ -162,16 +159,19 @@ function createGroupCard(groupData, groupId, template) {
   cardClone.querySelector(".group-goal").textContent = groupData.max || "N/A";
   cardClone.querySelector(".group-contribution").textContent =
     groupData.currentContribution || "0";
-  cardClone.querySelector(".group-deadline").textContent = groupData.deadline || "N/A";
+  cardClone.querySelector(".group-deadline").textContent =
+    groupData.deadline || "N/A";
 
-  // Attach event listener for the view details button
+  // Event listener for the view details button
   cardClone.querySelector(".view-details-btn").onclick = () =>
     viewGroupDetails(groupId);
 
+  // Event listener for the leave group button
+  cardClone.querySelector(".leave-group-btn").onclick = () =>
+    leaveGroup(groupId);
+
   return cardClone;
 }
-
-
 
 function viewGroupDetails(groupId) {
   console.log("Group ID before redirection:", groupId); // Check value here
@@ -184,6 +184,75 @@ function viewGroupDetails(groupId) {
 }
 
 
+
+
+// Function to handle leaving the group
+function leaveGroup(groupId) {
+  const userId = firebase.auth().currentUser.uid;
+
+  if (!groupId || !userId) {
+    console.error("Group ID or User ID is missing.");
+    return;
+  }
+
+  const groupDocRef = db.collection("budget-sheets").doc(groupId);
+
+  // Start by getting the user's contribution and the group's current value
+  groupDocRef
+    .get()
+    .then((groupDoc) => {
+      if (groupDoc.exists) {
+        const joinCode = groupDoc.data().code; // Fetch the join code here
+        console.log("Join code: ", joinCode);
+
+        // Get the user's document reference from the users/groups subcollection
+        const userDocRef = db
+          .collection("users")
+          .doc(userId)
+          .collection("groups")
+          .doc(joinCode);
+
+        // Fetch the user's contribution from the group-members subcollection
+        return userDocRef.get().then((userDoc) => {
+          if (userDoc.exists) {
+            const userContribution = userDoc.data().currentContribution || 0;
+
+            // Update the group's current amount by subtracting the user's contribution
+            return groupDocRef.update({
+              current: firebase.firestore.FieldValue.increment(
+                -userContribution
+              ), // Using increment to subtract
+            });
+          } else {
+            console.error("User's group document does not exist.");
+          }
+        });
+      } else {
+        console.error("Group document does not exist.");
+      }
+    })
+    .then(() => {
+      // After updating the group's current amount, remove the user from the group's members collection
+      return groupDocRef.collection("group-members").doc(userId).delete();
+    })
+    .then(() => {
+      // Remove the group's reference from the user's groups subcollection
+      const userDocRef = db
+        .collection("users")
+        .doc(userId)
+        .collection("groups")
+        .doc(groupId);
+      return userDocRef.delete();
+    })
+    .then(() => {
+      alert("You have successfully left the group.");
+      location.reload(); // Reload or redirect as needed
+    })
+    .catch((error) => {
+      console.error("Error removing user from group:", error);
+      alert("An error occurred while leaving the group.");
+    });
+}
 
 // Call the function to load user groups when the page loads
 firebase.auth().onAuthStateChanged((user) => {
