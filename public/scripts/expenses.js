@@ -5,6 +5,20 @@ function submitAmounts() {
     const userId = user.uid;
     const userExpensesRef = db.collection("users").doc(userId).collection("expenses").doc("expenseDoc");
 
+    // NOTES FOR JESSIE - PLEASE ASK COLE IF YOU HAVE QUESTIONS
+
+    // THIS DOESNT WORK BECAUSE YOU ARE TRYING TO ACCESS VALUES YOU HAVENT SET YET
+    // MAKE SEPERATE FUNCTIONS: ONE TO WRITE THE DATA AND ONE TO LOAD IT
+
+    // WE TALKED ABOUT NOT HAVING PLACEHOLDERS BECAUSE THEY ARE NOT GOING TO BE SUBMITTING THE NEW TOTAL EACH TIME, 
+    //    THEY ARE GOING TO BE SUBMITTING THEIR NUMBERS TO ADD, AND WE WILL ADD THEM TO THE TOTAL FOR THEM, ITS A RUNNING TOTAL
+
+    // WE SHOULD BE WRITING THE 2 INPUT FIELDS OF INCOME EARNED AND EXPENSE TO FIRESTORE, THEN WE NEED A SEPARATE FUNCTION TO LOAD THE REMAINING BALANCE ONTO THE PAGE
+    // SHOULD LOOK LIKE THIS ==>>
+    // totalIncome += incomeInput;
+    // totalExpense += expenseInput;
+    // totalRemaining = totalIncome - totalExpense; (recalculate this every time you reload the page in a **SEPARATE FUNCTION**)
+
     userExpensesRef.get()
       .then((doc) => {
         if (doc.exists) {
