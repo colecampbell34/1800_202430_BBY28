@@ -129,10 +129,17 @@ function loadUserGroups() {
         groupsContainer.innerHTML =
           '<p class="text-center fill-space">You are not a member of any groups.</p>';
         return;
-      }
+      }      
 
       // Clear existing cards
       groupsContainer.innerHTML = "";
+
+      // Sorts array of groups; sort by earliest deadlines
+      validGroupData.sort((x, y) => {
+        const dateX = new Date(x.deadline || "3000-01-01"); // Set a far future date if no deadline
+        const dateY = new Date(y.deadline || "3000-01-01");
+        return dateX - dateY; // Sort in ascending order
+      });            
 
       // Create and append group cards
       validGroupData.forEach((groupData) => {
@@ -144,6 +151,17 @@ function loadUserGroups() {
         );
         groupsContainer.appendChild(groupCard); // Append the card to the container
       });
+
+      if (validGroupData.length > 0) {
+        const nearestGroup = validGroupData[0];
+        const nearestGroupCurrent = nearestGroup.current || 0;
+        const nearestGroupMax = nearestGroup.max || 1;
+        const nearestGroupName = nearestGroup.groupname || "N/A";
+        console.log("Current:", nearestGroupCurrent, "Max:", nearestGroupMax, "Name:", nearestGroupName); // check results
+        localStorage.setItem("groupCurrent", nearestGroupCurrent);
+        localStorage.setItem("groupMax", nearestGroupMax);
+        localStorage.setItem("groupName", nearestGroupName);
+      }
     })
     .catch((error) => {
       console.error("Error fetching user groups: ", error);
