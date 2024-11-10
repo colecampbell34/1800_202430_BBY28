@@ -262,6 +262,7 @@ document
         .then(() => {
           loadGroupData(); // Reload data after updates complete
           alert("Contribution added successfully!");
+          // window.location.href = "groups.html";
         })
         .catch((error) => {
           console.error("Error adding contribution:", error);

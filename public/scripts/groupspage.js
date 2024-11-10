@@ -109,7 +109,7 @@ function loadUserGroups() {
               // User is a member, fetch group data
               const groupData = doc.data();
               groupData.id = doc.id; // Add the document ID to groupData
-              groupData.currentContribution = memberDoc.data().contribution; // Add member contribution to groupData
+              groupData.currentContribution = memberDoc.data().contribution; // Add member contribution to group data
               return groupData; // Return group data
             } else {
               return null; // User is not a member
@@ -124,6 +124,13 @@ function loadUserGroups() {
     .then((groupDataArray) => {
       // Filter out null values (non-member groups)
       const validGroupData = groupDataArray.filter((data) => data !== null);
+
+      // Sorts array of groups; sort by earliest deadlines
+      validGroupData.sort((x, y) => {
+        const dateX = new Date(x.deadline || "3000-01-01"); // Set a far future date if no deadline
+        const dateY = new Date(y.deadline || "3000-01-01");
+        return dateX - dateY; // Sort in ascending order
+      });
 
       if (validGroupData.length === 0) {
         groupsContainer.innerHTML =
@@ -144,6 +151,19 @@ function loadUserGroups() {
         );
         groupsContainer.appendChild(groupCard); // Append the card to the container
       });
+
+      if (validGroupData.length > 0) {
+        const nearestGroup = validGroupData[0];
+        const nearestGroupCurrent = nearestGroup.current || 0;
+        const nearestGroupMax = nearestGroup.max || 1;
+        const nearestGroupName = nearestGroup.groupname || "N/A";
+
+        console.log("Current:", nearestGroupCurrent, "Max:", nearestGroupMax, "Name:", nearestGroupName); // check results
+
+        localStorage.setItem("groupCurrent", nearestGroupCurrent);
+        localStorage.setItem("groupMax", nearestGroupMax);
+        localStorage.setItem("groupName", nearestGroupName);
+      }
     })
     .catch((error) => {
       console.error("Error fetching user groups: ", error);

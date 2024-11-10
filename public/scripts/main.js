@@ -18,7 +18,20 @@ function getNameFromAuth() {
 }
 getNameFromAuth(); //run the function
 
-// Retrieve groups collection a user is in and find nearest trip date
-// TODO
-const userId = firebaseConfigbase.auth().currentUser.uid;
-const groups = db.collection("users").doc(userId).collection("groups");
+
+// TODO clinton
+// const userId = firebaseConfigbase.auth().currentUser.uid;
+// const userGroups = db.collection("users").doc(userId).collection("groups");
+// Update progress bar
+// const progressPercentage = (groupData.current / groupData.max) * 100;
+document.addEventListener("DOMContentLoaded", () => {
+  const current = localStorage.getItem("groupCurrent");
+  const max = localStorage.getItem("groupMax");
+  const name = localStorage.getItem("groupName");
+  const progressPercentage = (current / max) * 100;
+
+  const progressBar = document.querySelector(".progress-bar");
+  progressBar.style.width = `${progressPercentage}%`;
+  progressBar.textContent = `${Math.round(progressPercentage)}%`;
+  document.querySelector(".nearest-trip").textContent = name;
+});
