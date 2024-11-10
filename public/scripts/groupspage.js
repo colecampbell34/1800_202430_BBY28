@@ -125,13 +125,6 @@ function loadUserGroups() {
       // Filter out null values (non-member groups)
       const validGroupData = groupDataArray.filter((data) => data !== null);
 
-      // Sorts array of groups; sort by earliest deadlines
-      validGroupData.sort((x, y) => {
-        const dateX = new Date(x.deadline || "3000-01-01"); // Set a far future date if no deadline
-        const dateY = new Date(y.deadline || "3000-01-01");
-        return dateX - dateY; // Sort in ascending order
-      });
-
       if (validGroupData.length === 0) {
         groupsContainer.innerHTML =
           '<p class="text-center fill-space">You are not a member of any groups.</p>';
@@ -151,19 +144,6 @@ function loadUserGroups() {
         );
         groupsContainer.appendChild(groupCard); // Append the card to the container
       });
-
-      if (validGroupData.length > 0) {
-        const nearestGroup = validGroupData[0];
-        const nearestGroupCurrent = nearestGroup.current || 0;
-        const nearestGroupMax = nearestGroup.max || 1;
-        const nearestGroupName = nearestGroup.groupname || "N/A";
-
-        console.log("Current:", nearestGroupCurrent, "Max:", nearestGroupMax, "Name:", nearestGroupName); // check results
-
-        localStorage.setItem("groupCurrent", nearestGroupCurrent);
-        localStorage.setItem("groupMax", nearestGroupMax);
-        localStorage.setItem("groupName", nearestGroupName);
-      }
     })
     .catch((error) => {
       console.error("Error fetching user groups: ", error);
@@ -224,6 +204,7 @@ function leaveGroup(groupId) {
   }
 
   const groupDocRef = db.collection("budget-sheets").doc(groupId);
+  const userExpRef = db.collection("users").doc(userId).collection("expenses").doc("expensesDoc");
   let joinCode;
 
   // Start by getting the user's contribution and the group's current value
@@ -243,13 +224,23 @@ function leaveGroup(groupId) {
     })
     .then((userDoc) => {
       if (userDoc.exists) {
-        // Access the user's contribution
         const userCurrent = userDoc.data().contribution || 0;
-
-        // Update the group's current field by subtracting the user's contribution
-        return groupDocRef.update({
-          current: firebase.firestore.FieldValue.increment(-userCurrent), // Subtract the user's contribution
+    
+        // Initialize a batch for atomic updates
+        const batch = db.batch();
+    
+        // Update user's remaining balance in their expenses doc
+        batch.update(userExpRef, {
+          remaining: firebase.firestore.FieldValue.increment(userCurrent)
         });
+    
+        // Update the group's current amount by subtracting the user's contribution
+        batch.update(groupDocRef, {
+          current: firebase.firestore.FieldValue.increment(-userCurrent)
+        });
+    
+        // Commit the batch
+        return batch.commit();
       } else {
         console.error("User's contribution document not found in group-members.");
       }
