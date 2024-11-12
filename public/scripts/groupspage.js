@@ -152,16 +152,16 @@ function loadUserGroups() {
         groupsContainer.appendChild(groupCard); // Append the card to the container
       });
 
-      if (validGroupData.length > 0) {
-        const nearestGroup = validGroupData[0];
-        const nearestGroupCurrent = nearestGroup.current || 0;
-        const nearestGroupMax = nearestGroup.max || 1;
-        const nearestGroupName = nearestGroup.groupname || "N/A";
-        console.log("Current:", nearestGroupCurrent, "Max:", nearestGroupMax, "Name:", nearestGroupName); // check results
-        localStorage.setItem("groupCurrent", nearestGroupCurrent);
-        localStorage.setItem("groupMax", nearestGroupMax);
-        localStorage.setItem("groupName", nearestGroupName);
-      }
+      // if (validGroupData.length > 0) {
+      //   const nearestGroup = validGroupData[0];
+      //   const nearestGroupCurrent = nearestGroup.current || 0;
+      //   const nearestGroupMax = nearestGroup.max || 1;
+      //   const nearestGroupName = nearestGroup.groupname || "N/A";
+      //   console.log("Current:", nearestGroupCurrent, "Max:", nearestGroupMax, "Name:", nearestGroupName); // check results
+      //   localStorage.setItem("groupCurrent", nearestGroupCurrent);
+      //   localStorage.setItem("groupMax", nearestGroupMax);
+      //   localStorage.setItem("groupName", nearestGroupName);
+      // }
     })
     .catch((error) => {
       console.error("Error fetching user groups: ", error);
