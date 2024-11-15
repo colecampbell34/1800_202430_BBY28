@@ -2,3 +2,13 @@
 body {
   background-color: #f7f7db;
 }
+
+.bar-style-timeline {
+  background-color: #454D66;
+  color: white;
+}
+
+.bar-style-money {
+  background-color: #DAD873;
+  color: black;
+}

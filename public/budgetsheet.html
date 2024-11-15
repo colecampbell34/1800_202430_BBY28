@@ -82,11 +82,13 @@
 
           <!-- Group Progress Bar -->
           <div class="card shadow-sm mb-4">
-            <div class="card-header bg-success text-white">Progress</div>
+            <div class="card-header bg-success text-white">
+              Contribution progress
+            </div>
             <div class="card-body">
               <div class="progress mb-2">
                 <div
-                  class="progress-bar bg-success progress-bar-striped"
+                  class="progress-bar bar-style-money progress-bar-striped money"
                   role="progressbar"
                   style="width: 0%"
                   aria-valuemin="0"
@@ -95,19 +97,44 @@
                   0%
                 </div>
               </div>
-              <small class="text-muted">Current Progress</small>
+              <div class="d-flex justify-content-between">
+                <small class="text-muted">$0</small>
+                <small class="text-muted group-goal-goes-here">$<span id="end-goal"></span></small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date Progress Bar -->
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">Timeline</div>
+            <div class="card-body">
+              <div class="progress mb-2">
+                <div
+                  class="progress-bar bar-style-timeline progress-bar-striped timeline"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  0%
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <small class="text-muted start-date-goes-here" id="start-date">start</small>
+                <small class="text-muted deadline-goes-here" id="end-date">end</small>
+              </div>
             </div>
           </div>
 
           <!-- Group Members -->
           <div class="card shadow-sm mb-4">
-            <div class="card-header bg-success text-white">Members</div>
+            <div class="card-header bg-success text-white">Contributors</div>
             <div class="card-body">
               <ul class="list-group">
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
-                  <span id="name-goes-here">Member Name</span>
+                  <span id="name-goes-here">Name</span>
                   <span>
                     Contribution: $ (<span id="current-goes-here"></span>/<span
                       id="max-goes-here"
@@ -128,7 +155,7 @@
             <div class="card-body row">
               <div class="col-md-6 mb-3">
                 <label for="adjustGoal" class="form-label"
-                  >Adjust Group Goal</label
+                  >New group goal?</label
                 >
                 <input
                   type="number"
@@ -139,12 +166,12 @@
                   placeholder="Enter amount"
                 />
                 <button class="btn btn-outline-success mt-2 w-100">
-                  Update Goal
+                  Update
                 </button>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="adjustContribution" class="form-label"
-                  >Add Contribution</label
+                  >Contribute Now!</label
                 >
                 <input
                   type="number"
@@ -155,7 +182,7 @@
                   placeholder="Enter amount"
                 />
                 <button class="btn btn-outline-success mt-2 w-100">
-                  Contribute
+                  Submit
                 </button>
               </div>
             </div>
@@ -164,7 +191,7 @@
           <!-- Expense Breakdown -->
           <div class="card shadow-sm mb-4">
             <div class="card-header bg-success text-white">
-              Expense Breakdown
+              Where is the money going?
             </div>
             <div class="card-body">
               <table class="table table-striped">
@@ -183,7 +210,7 @@
                 class="btn btn-outline-success mt-2"
                 onclick="addAllocation()"
               >
-                Allocate Money
+                Add New Breakdown
               </button>
             </div>
           </div>

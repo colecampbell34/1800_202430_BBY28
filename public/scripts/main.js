@@ -59,10 +59,6 @@ function loadNearestGroup() {
         const nearestGroupMax = nearestGroup.max || 1;
         const nearestGroupName = nearestGroup.groupname || "N/A";
 
-        // localStorage.setItem("groupCurrent", nearestGroupCurrent);
-        // localStorage.setItem("groupMax", nearestGroupMax);
-        // localStorage.setItem("groupName", nearestGroupName);
-
         // Update the progress bar
         const progressPercentage = (nearestGroupCurrent / nearestGroupMax) * 100;
         const progressBar = document.querySelector(".progress-bar");

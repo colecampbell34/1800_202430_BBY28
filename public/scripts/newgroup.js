@@ -12,7 +12,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
   const groupName = document.getElementById("groupName").value;
   const groupGoal = parseFloat(document.getElementById("groupGoal").value);
   const groupDate = document.getElementById("groupDate").value;
-  // const groupSize = parseInt(document.getElementById("groupSize").value);
+  const startDate = new Date().toLocaleDateString('en-CA');
 
   // Generate a unique join code
   const joinCode = generateJoinCode();
@@ -22,6 +22,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     groupname: groupName,
     max: groupGoal,
     deadline: groupDate,
+    start: startDate,
     size: 1,
     current: 0,
     code: joinCode,

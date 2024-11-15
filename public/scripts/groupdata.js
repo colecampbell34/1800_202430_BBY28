@@ -4,9 +4,6 @@ function getGroupIdFromURL(name) {
   return urlParams.get(name);
 }
 
-
-
-
 // Use this function to get the group ID when the page loads
 document.addEventListener("DOMContentLoaded", function () {
   const groupId = getGroupIdFromURL("joinCode");
@@ -18,9 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loadGroupData();
   }
 });
-
-
-
 
 // Function to load group data into budgetsheet.html based on the specific group
 function loadGroupData() {
@@ -49,12 +43,29 @@ function loadGroupData() {
           groupData.current || "0";
         document.getElementById("deadline-goes-here").textContent =
           groupData.deadline || "N/A";
+        // Load onto progress bar cards
+        document.getElementById("end-goal").textContent =
+          groupData.max || "N/A";
+        document.getElementById("start-date").textContent =
+          groupData.start || "N/A";
+        document.getElementById("end-date").textContent =
+          groupData.deadline || "N/A";
 
         // Update progress bar
         const progressPercentage = (groupData.current / groupData.max) * 100;
-        const progressBar = document.querySelector(".progress-bar");
+        const progressBar = document.querySelector(".money");
         progressBar.style.width = `${progressPercentage}%`;
         progressBar.textContent = `${Math.round(progressPercentage)}%`;
+
+        // Update timeline bar
+        // Calculate the percentage for how close
+        const datePercentage = calculateDatePercentage(
+          groupData.start,
+          groupData.deadline
+        );
+        const dateBar = document.querySelector(".timeline");
+        dateBar.style.width = `${datePercentage}%`;
+        dateBar.textContent = `${Math.round(datePercentage)}%`;
 
         // Load members list
         loadGroupMembers(groupId);
@@ -74,8 +85,25 @@ function loadGroupData() {
     });
 }
 
+// Function to calculate the percentage of time passed
+function calculateDatePercentage(startDate, deadline) {
+  // Convert dates to milliseconds
+  const startTime = new Date(startDate).getTime();
+  const deadlineTime = new Date(deadline).getTime();
+  const currentTime = new Date().getTime();
 
+  // Calculate the total duration between start and deadline
+  const totalDuration = deadlineTime - startTime;
 
+  // Calculate the elapsed time from the start date to now
+  const elapsedTime = currentTime - startTime;
+
+  // Calculate the percentage of time that has passed
+  const datePercentage = (elapsedTime / totalDuration) * 100;
+
+  // Ensure the percentage is within 0-100%
+  return Math.min(Math.max(datePercentage, 0), 100);
+}
 
 // Function to load members of the group
 function loadGroupMembers(groupId) {
@@ -111,9 +139,6 @@ function loadGroupMembers(groupId) {
       });
   });
 }
-
-
-
 
 // Function to recalculate max amount for each member
 function recalculateMaxForMembers(groupId) {
@@ -152,9 +177,6 @@ function recalculateMaxForMembers(groupId) {
     });
 }
 
-
-
-
 // Inline function to update the group goal
 document.querySelector("#adjustGoal + button").addEventListener("click", () => {
   const groupId = getGroupIdFromURL("joinCode");
@@ -180,9 +202,6 @@ document.querySelector("#adjustGoal + button").addEventListener("click", () => {
     alert("Please enter a valid goal amount.");
   }
 });
-
-
-
 
 // Inline function to add a contribution
 document
@@ -272,9 +291,6 @@ document
     }
   });
 
-
-
-
 // When user clicks the add allocation button
 function addAllocation() {
   const category = prompt("Enter expense category:");
@@ -286,9 +302,6 @@ function addAllocation() {
     alert("Please enter valid details.");
   }
 }
-
-
-
 
 // This function loads if the user put in valid info
 function addAllocationData(category, amount) {
@@ -324,9 +337,6 @@ function addAllocationData(category, amount) {
       console.error("Error adding allocation:", error);
     });
 }
-
-
-
 
 function recalculateAllocations() {
   const groupId = getGroupIdFromURL("joinCode");
@@ -377,9 +387,6 @@ function recalculateAllocations() {
       console.error("Error fetching group data:", error);
     });
 }
-
-
-
 
 function loadExpenseBreakdown() {
   const groupId = getGroupIdFromURL("joinCode");
@@ -438,9 +445,6 @@ function loadExpenseBreakdown() {
       console.error("Error loading expense breakdown:", error);
     });
 }
-
-
-
 
 function removeAllocation(allocationId) {
   const groupId = getGroupIdFromURL("joinCode"); // Get group ID from URL
