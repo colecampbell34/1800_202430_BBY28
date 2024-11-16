@@ -69,12 +69,13 @@
                 <i class="bi bi-people me-2"></i>
                 <span id="group-name">Group Name</span>
                 <button
-                class="bi bi-pencil-square no-border"
-                onclick="editGroupName()">
-                </button>
+                  class="bi bi-pencil-square no-border"
+                  onclick="editGroupName()"
+                ></button>
               </h2>
               <p class="text-center">
-                <strong>Goal:</strong> $<span id="group-goal">0</span> <br />
+                <strong>Goal:</strong> $<span id="group-goal">0</span>
+                <br />
                 <strong>Saved:</strong> $<span id="current-amount">0</span>
                 <br />
                 <strong>Deadline:</strong>
@@ -178,9 +179,7 @@
                   class="form-control"
                   placeholder="Enter amount"
                 />
-                <button class="btn button-style-blue mt-2 w-100">
-                  Submit
-                </button>
+                <button class="btn button-style-blue mt-2 w-100">Submit</button>
               </div>
 
               <!-- Adjust goal -->
@@ -195,22 +194,6 @@
                   min="0"
                   class="form-control"
                   placeholder="Enter amount"
-                />
-                <button class="btn button-style-yellow mt-2 w-100">
-                  Update
-                </button>
-              </div>
-
-              <!-- Edit group name -->
-              <div class="col-md-6 mb-3">
-                <label for="adjustName" class="form-label"
-                  >New Group Name?</label
-                >
-                <input
-                  type="text"
-                  id="adjustName"
-                  class="form-control"
-                  placeholder="Enter Name"
                 />
                 <button class="btn button-style-yellow mt-2 w-100">
                   Update

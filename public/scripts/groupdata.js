@@ -203,27 +203,6 @@ document.querySelector("#adjustGoal + button").addEventListener("click", () => {
   }
 });
 
-document.querySelector("#adjustName + button").addEventListener("click", () => {
-  const groupId = getGroupIdFromURL("joinCode");
-  const newName = document.getElementById("adjustName").value.trim();
-  if (newName) {
-    db.collection("budget-sheets")
-      .doc(groupId)
-      .update({
-        groupname: newName,
-      })
-      .then(() => loadGroupData()) // Reload group data to show the updated name
-      .then(() => {
-        alert("Group name updated successfully!");
-      })
-      .catch((error) => {
-        console.error("Error updating group name:", error);
-      });
-  } else {
-    alert("Please enter a valid group name.");
-  }
-});
-
 document
   .querySelector("#adjustDeadline + button")
   .addEventListener("click", () => {
