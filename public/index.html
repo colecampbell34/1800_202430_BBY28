@@ -15,21 +15,17 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-
     <!-- Boostrap Library JS CDN  go here -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <!-- add by Jessie for login page -->
-    <link rel="stylesheet" href="/styles/style.css" />
 
     <!-- Other libraries go here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Link to styles of your own -->
-    <!-- <link rel="stylesheet" href="./styles/style.css" /> -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
@@ -47,31 +43,54 @@
       rel="stylesheet"
       href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
     />
+    <!-- <link rel="stylesheet" href="./styles/style.css" /> -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-   <link rel="stylesheet" href="/styles/colorforpages.css"/>
+    <link rel="stylesheet" href="/styles/colorforpages.css"/>
+    <link rel="stylesheet" href="/styles/filling.css"/>
+    <link rel="stylesheet" href="/styles/index.css"/>
   </head>
 
-  <body style="background-color: #309975;">
+  <body>
     <!------------------------------>
     <!-- Your HTML Layout go here -->
     <!------------------------------>
 
-
     <!--header-->
     <div id="header" class="sticky-top"></div>
 
-
-    <!--popup login page by Jessie-->
-    <div id="loginModal" class="modal-overlay">
-      <div class="modal-content">
-        <!-- <span class="close-btn" onclick="closeModal()">&times;</span> -->
-        <div class="container">
-          <h3>Let's Login!</h3>
-        </div>
-        <div id="firebaseui-auth-container"></div>
-        <div id="loader">Loading...</div>
-      </div>
+    <!-- Main Section of Homepage -->
+    <div 
+    class="p-5 mb-4 bg-light rounded-3 shadow-sm" 
+    style="height: 70vh; background-size: cover; background-position: center; background-repeat: no-repeat;" 
+    id="slideshow-container">
+    <div class="container-fluid py-5 text-center" style="margin-top: 5%;">
+      <h1 class="display-5 fw-bold" id="slideshow-text"></h1>
     </div>
+    <button id="myButton" onclick="window.location.href='login.html'">Let's Do it With <i>CollectiveCoin</i>!</button>
+  </div>
+
+   <!-- Images below the slider -->
+   <div class="image-grid" style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0; padding: 0 10%; gap: 20px;">
+    <div style="text-align: center; flex: 1;">
+    <img src="/images/instagram.svg" alt="Instagram" style="width: 80px; height: auto;" />
+    <p>Instagram</p>
+  </div>
+  <div style="text-align: center; flex: 1;">
+    <img src="/images/line.svg" alt="LINE" style="width: 80px; height: auto;" />
+    <p>LINE</p>
+  </div>
+  <div style="text-align: center; flex: 1;">
+    <img src="/images/twitter.svg" alt="Image 1" style="width: 80px; height: auto;" />
+    <p>Twitter</p>
+  </div>
+  <div style="text-align: center; flex: 1;">
+    <img src="/images/youtube.svg" alt="Image 2" style="width: 80px; height: auto;" />
+    <p>Youtube</p>
+  </div>
+</div>
+
+    <!--navbar by Cole-->
+    <!-- <div id="navbar" class="sticky-bottom"></div> -->
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
@@ -79,22 +98,9 @@
 
     <!-- Link to scripts of your own -->
     <script src="/scripts/firebaseAPI_BBY28.js"></script>
-    <script src="/scripts/authentication.js"></script>
+    <script src="/scripts/main.js"></script>
     <script src="/scripts/skeleton.js"></script>
-
-    
-    <!-- add by Jessie for login page! -->
-    <script>
-      // open login page
-      function openModal() {
-        document.getElementById("loginModal").style.display = "flex";
-        document.body.classList.add("modal-open"); // forbiding for scrolling
-      }
-
-      // when the page opens, the login page show up automatically.
-      window.onload = function () {
-        openModal();
-      };
-    </script>
+    <script src="/scripts/font.js"></script>
+    <script src="/scripts/index.js"></script>
   </body>
 </html>

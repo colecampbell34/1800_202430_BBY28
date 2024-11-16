@@ -1,0 +1,36 @@
+      /* slide css */
+      #slideshow-container {
+          position: relative;
+          overflow: hidden;
+          height: 70vh;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          transition: background-image 1s ease-in-out; 
+        }
+
+   /* fix the botton on the bottom of the page and gradient color */
+   /* color message: #454D66 #309975 #58B368 #DAD873 #EFEEB4 */
+   #myButton {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: none; 
+          padding: 10px 20px;
+          font-size: 16px;
+          border: none;
+          border-radius: 5px;
+          background: linear-gradient(90deg, #309975, #ffff00); 
+          color: white;
+          font-weight: bold;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: background 0.5s ease; 
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+      
+        /* mouse hover color change
+        #myButton:hover {
+          background: linear-gradient(90deg, #ffff00, #309975); 
+        } */
