@@ -462,3 +462,44 @@ function removeAllocation(allocationId) {
       console.error("Error removing allocation:", error);
     });
 }
+
+/*rewrite the Group Name*/
+function editGroupName() {
+  const groupId = getGroupIdFromURL("joinCode"); // Get group ID from URL or another source
+  const newname = prompt("Enter your new group name:");
+
+  if (newname && newname.trim() !== "") {
+    // Update the group name in the Firebase database
+    db.collection("budget-sheets")
+      .doc(groupId)
+      .update({ groupname: newname }) // Update the group name
+      .then(() => {
+        console.log("Group name updated successfully.");
+
+        // Reload the updated group name in the HTML
+        db.collection("budget-sheets")
+          .doc(groupId)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              const groupData = doc.data();
+
+              // Populate the HTML with the updated group name
+                document.getElementById("group-name").textContent =
+                groupData.groupname || "Unnamed Group";
+            } else {
+              console.error("Group document not found.");
+              }
+            })
+          .catch((error) => {
+            console.error("Error fetching group data: ", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error updating group name: ", error);
+        alert("Failed to update the group name. Please try again.");
+      });
+  } else {
+    alert("Please enter a valid name.");
+  }
+}

@@ -1,0 +1,15 @@
+/*Delete the boder lines of the button*/
+.no-border{
+  border: none; /* Removes the border */
+  background: none; /* Removes background for a cleaner look */
+  cursor: pointer; /* Ensures it still looks clickable */
+  padding: 0; /* Removes default padding if any */
+  outline: none; /* Removes focus outline when clicked (optional) */
+}
+
+/*change the size of the pencil-icon, the groupnamechange button*/
+.bi-pencil-square{
+  font-size: 1rem; 
+  width: 1.5rem; 
+  height: 1.5rem;
+}
