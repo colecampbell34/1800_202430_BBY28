@@ -59,32 +59,33 @@
     <div id="header" class="sticky-top"></div>
 
     <!-- Main Section of Homepage -->
-    <div 
-    class="p-5 mb-4 bg-light rounded-3 shadow-sm" 
-    style="height: 70vh; background-size: cover; background-position: center; background-repeat: no-repeat;" 
-    id="slideshow-container">
-    <div class="container-fluid py-5 text-center" style="margin-top: 5%;">
-      <h1 class="display-5 fw-bold" id="slideshow-text"></h1>
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm addbackground" >
+      <div class="container-fluid py-5 text-center">
+        <button id="myButton" onclick="window.location.href='login.html'">Let's Do it With <i>CollectiveCoin</i>!</button>
+      </div>
     </div>
-    <button id="myButton" onclick="window.location.href='login.html'">Let's Do it With <i>CollectiveCoin</i>!</button>
-  </div>
 
-   <!-- Images below the slider -->
-   <div class="image-grid" style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0; padding: 0 10%; gap: 20px;">
-    <div style="text-align: center; flex: 1;">
-    <img src="/images/instagram.svg" alt="Instagram" style="width: 80px; height: auto;" />
+    <!-- introduction for the app -->
+     <div class="introduction">
+
+     </div>
+
+    <!-- Images below the slider -->
+   <div class="image-grid">
+    <div class="image-details">
+    <img src="/images/instagram.svg" alt="Instagram" class="icons"/>
     <p>Instagram</p>
   </div>
-  <div style="text-align: center; flex: 1;">
-    <img src="/images/line.svg" alt="LINE" style="width: 80px; height: auto;" />
+  <div class="image-details">
+    <img src="/images/line.svg" alt="LINE" class="icons"/>
     <p>LINE</p>
   </div>
-  <div style="text-align: center; flex: 1;">
-    <img src="/images/twitter.svg" alt="Image 1" style="width: 80px; height: auto;" />
+  <div class="image-details">
+    <img src="/images/twitter.svg" alt="Image 1" class="icons"/>
     <p>Twitter</p>
   </div>
-  <div style="text-align: center; flex: 1;">
-    <img src="/images/youtube.svg" alt="Image 2" style="width: 80px; height: auto;" />
+  <div class="image-details">
+    <img src="/images/youtube.svg" alt="Image 2" class="icons"/>
     <p>Youtube</p>
   </div>
 </div>
@@ -101,6 +102,5 @@
     <script src="/scripts/main.js"></script>
     <script src="/scripts/skeleton.js"></script>
     <script src="/scripts/font.js"></script>
-    <script src="/scripts/index.js"></script>
   </body>
 </html>

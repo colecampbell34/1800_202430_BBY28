@@ -1,36 +1,57 @@
-      /* slide css */
-      #slideshow-container {
-          position: relative;
-          overflow: hidden;
-          height: 70vh;
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          transition: background-image 1s ease-in-out; 
-        }
-
-   /* fix the botton on the bottom of the page and gradient color */
    /* color message: #454D66 #309975 #58B368 #DAD873 #EFEEB4 */
+   /*background design*/
+   .addbackground{
+    height: 55vh;
+    background-image: url('/images/save.svg');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+   }
+
+   /* button design*/
    #myButton {
-          position: absolute;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          display: none; 
-          padding: 10px 20px;
-          font-size: 16px;
-          border: none;
-          border-radius: 5px;
-          background: linear-gradient(90deg, #309975, #ffff00); 
-          color: white;
-          font-weight: bold;
-          text-transform: uppercase;
-          cursor: pointer;
-          transition: background 0.5s ease; 
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: absolute; /* Fix the button inside the container */
+    bottom: 37vh; /* Position it 20px above the container's bottom */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Ensure perfect horizontal centering */
+    padding: 1% 1%; 
+    font-size: 16px; 
+    font-weight: bold; 
+    border: none; 
+    border-radius: 5px; 
+    background: linear-gradient(90deg, #309975, #ffff00); 
+    color: white;
+    text-transform: uppercase; 
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
         }
       
         /* mouse hover color change
         #myButton:hover {
           background: linear-gradient(90deg, #ffff00, #309975); 
         } */
+
+
+
+  /*edit for social media icons*/
+  .image-grid{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin: 20px 0; 
+    padding: 0 10%; 
+    gap: 20px;
+  }
+
+  .image-details{
+    text-align: center; 
+    flex: 1;
+  }
+
+  .icons{
+    width: 40px; 
+    height: auto;
+  }
+
+
