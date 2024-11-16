@@ -12,3 +12,23 @@ body {
   background-color: #DAD873;
   color: black;
 }
+
+.button-style-blue:hover {
+  background-color: #454D66;
+  color: white;
+}
+
+.button-style-blue {
+  background-color: white;
+  color: #454D66;
+}
+
+.button-style-yellow:hover {
+  background-color: #DAD873;
+  color: black;
+}
+
+.button-style-yellow {
+  background-color: white;
+  color: #DAD873;
+}

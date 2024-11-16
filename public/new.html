@@ -22,7 +22,7 @@
       crossorigin="anonymous"
     ></script>
 
-     <!-------------------------------------------------------->
+    <!-------------------------------------------------------->
     <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
     <!-------------------------------------------------------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -41,12 +41,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Link to styles of your own -->
-    <link rel="stylesheet" href="./styles/filling.css" />
+    <link rel="stylesheet" href="/styles/filling.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
     />
-    <link rel="stylesheet" href="/styles/colorforpages.css"/>
+    <link rel="stylesheet" href="/styles/colorforpages.css" />
   </head>
 
   <body>
@@ -59,7 +59,7 @@
 
     <!-- New Group Section -->
     <div class="container mt-5 mb-5 fill-space">
-      <h2 class="text-center mb-4">Create a New Group</h2>
+      <h2 class="text-center mb-4">Start a New Adventure!</h2>
 
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -67,7 +67,7 @@
             <!-- Group Name -->
             <div class="mb-3">
               <label for="groupName" class="form-label"
-                >Name for New Group:</label
+                >What will you call this adventure?</label
               >
               <input
                 type="text"
@@ -81,7 +81,7 @@
             <!-- Group Budget Goal -->
             <div class="mb-3">
               <label for="groupGoal" class="form-label"
-                >Group Budget Goal ($):</label
+                >How much will this cost?</label
               >
               <input
                 type="number"
@@ -95,15 +95,22 @@
 
             <!-- Deadline -->
             <div class="mb-3">
-              <label for="groupDate" class="form-label"
-                >Deadline:</label
-              >
+              <label for="groupDate" class="form-label">When does this adventure start?</label>
               <input type="date" class="form-control" id="groupDate" required />
+            </div>
+
+            <!-- Info -->
+            <div class="mb-3">
+              <p>
+                <b>*These are editable anytime within the group budget sheet*</b>
+              </p>
             </div>
 
             <!-- Submit Button -->
             <div class="d-grid">
-              <button id="form" type="submit" class="btn btn-success" >Submit</button>
+              <button id="form" type="submit" class="btn btn-success">
+                Submit
+              </button>
             </div>
           </form>
         </div>
