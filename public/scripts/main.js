@@ -16,8 +16,8 @@ function getNameFromAuth() {
 
 
 
-// Modify loadNearestGroup to update the progress bar after setting localStorage
-function loadNearestGroup() {
+// loads progress of all groups user is in
+function loadGroups() {
   const userId = firebase.auth().currentUser.uid; 
 
   return db.collection("budget-sheets")
@@ -54,22 +54,63 @@ function loadNearestGroup() {
       });
 
       if (validGroupData.length > 0) {
-        const nearestGroup = validGroupData[0];
-        const nearestGroupCurrent = nearestGroup.current || 0;
-        const nearestGroupMax = nearestGroup.max || 1;
-        const nearestGroupName = nearestGroup.groupname || "N/A";
+        const container = document.getElementById("group-progress-container");
 
-        // Update the progress bar
-        const progressPercentage = (nearestGroupCurrent / nearestGroupMax) * 100;
-        const progressBar = document.querySelector(".progress-bar");
+        validGroupData.forEach((group) => {
+          const groupCurrent = group.current || 0;
+          const groupMax = group.max || 1;
+          const groupName = group.groupname || "N/A";
+        
+
+        // Populate the progress bar
+        const progressPercentage = (groupCurrent / groupMax) * 100;
+        // create new div for card
+        const groupCard = document.createElement("div");
+        // set class for the div: class="card shadow-sm mb-4"
+        groupCard.classList.add("card", "shadow-sm", "mb-4");
+        // pass formatted card template that will contain progress bar
+        groupCard.innerHTML = `
+            <div class="card-header bg-success text-white">
+            <a href="budgetsheet.html?joinCode=${group.id}" class="card-header bg-success text-white">${groupName}</a>
+            </div>
+              <div class="card-body">
+                <div class="progress mb-2">
+                  <div
+                    class="progress-bar bar-style-money progress-bar-striped"
+                    role="progressbar"
+                    style="width: ${progressPercentage}%"
+                    aria-valuemin="0"
+                    aria-valuemax="100%"
+                    >
+                    ${Math.round(progressPercentage)}%
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <small class="text-muted">$0</small>
+                  <small class="text-muted">$${groupMax}</small>
+                </div>
+              </div>
+              `;
+              // add card to div with id groups-progress-container in main.html
+              container.appendChild(groupCard);
+              
+
+          
+
+        {/* const progressBar = document.querySelector(".progress-bar");
         progressBar.style.width = `${progressPercentage}%`;
         progressBar.textContent = `${Math.round(progressPercentage)}%`;
         document.querySelector(".nearest-trip").textContent = nearestGroupName;
+        document.getElementById("nearest-trip-goal").textContent =
+          nearestGroupMax || "N/A"; */}
+          });
       } else {
-        const nearestGroupName = "N/A";
+        // const nearestGroupName = "N/A";
         // localStorage.setItem("groupName", nearestGroupName);
-        document.querySelector(".nearest-trip").textContent = nearestGroupName;
-        return;
+        // document.querySelector(".nearest-trip").textContent = nearestGroupName;
+        // return;
+        const container = document.getElementById("groups-progress-container");
+        container.innerHTML = '<p>No groups found...</p>';
       }
     })
     .catch((error) => {
@@ -82,7 +123,7 @@ function loadNearestGroup() {
 
 document.addEventListener("DOMContentLoaded", () => {
   getNameFromAuth()
-    .then(() => loadNearestGroup())
+    .then(() => loadGroups())
     .catch((error) => {
       console.error("An error occurred:", error);
     });
