@@ -13,19 +13,9 @@ body {
   color: black;
 }
 
-.blue-button {
-  background-color: #454D66;
-  color: white;
-}
-
 .yellow-button {
   background-color: #DAD873;
   color: black;
-}
-
-.blue-button:hover {
-  background-color: #2c3141;
-  color: white;
 }
 
 .yellow-button:hover {
