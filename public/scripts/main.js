@@ -109,8 +109,8 @@ function loadGroups() {
         // localStorage.setItem("groupName", nearestGroupName);
         // document.querySelector(".nearest-trip").textContent = nearestGroupName;
         // return;
-        const container = document.getElementById("groups-progress-container");
-        container.innerHTML = '<p>No groups found...</p>';
+        const container = document.getElementById("group-progress-container");
+        container.innerHTML = '<h2 class="text-center mb-4">No Groups Found</h2>';
       }
     })
     .catch((error) => {
