@@ -181,7 +181,7 @@ function recalculateMaxForMembers(groupId) {
 document.querySelector("#adjustGoal + button").addEventListener("click", () => {
   const groupId = getGroupIdFromURL("joinCode");
   const newGoal = parseFloat(document.getElementById("adjustGoal").value);
-  if (!isNaN(newGoal) && newGoal > 0) {
+  if (!isNaN(newGoal) && newGoal > 99) {
     db.collection("budget-sheets")
       .doc(groupId)
       .update({
