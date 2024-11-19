@@ -13,22 +13,22 @@ body {
   color: black;
 }
 
-.button-style-blue:hover {
+.blue-button {
   background-color: #454D66;
   color: white;
 }
 
-.button-style-blue {
-  background-color: white;
-  color: #454D66;
-}
-
-.button-style-yellow:hover {
+.yellow-button {
   background-color: #DAD873;
   color: black;
 }
 
-.button-style-yellow {
-  background-color: white;
-  color: #DAD873;
+.blue-button:hover {
+  background-color: #2c3141;
+  color: white;
+}
+
+.yellow-button:hover {
+  background-color: #adac5c;
+  color: black;
 }
