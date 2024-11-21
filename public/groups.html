@@ -1,141 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CollectiveCoin</title>
-    <meta name="comp1800 template" content="My 1800 App" />
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>CollectiveCoin</title>
+  <meta name="comp1800 template" content="My 1800 App" />
 
-    <!-- Bootstrap Library CSS CDN go here -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <!-- Boostrap Library JS CDN  go here -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-------------------------------------------------------->
-    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
-    <!-------------------------------------------------------->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
-    />
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <!-- Bootstrap Library CSS CDN go here -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <!-- Boostrap Library JS CDN  go here -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
-    <!-- Other libraries go here -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-------------------------------------------------------->
+  <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+  <!-------------------------------------------------------->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-    <!-- Link to styles of your own -->
-    <link rel="stylesheet" href="/styles/filling.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="/styles/colorforpages.css" />
-  </head>
+  <!-- Other libraries go here -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <body>
-    <!------------------------------>
-    <!-- Your HTML Layout go here -->
-    <!------------------------------>
+  <!-- Link to styles of your own -->
+  <link rel="stylesheet" href="/styles/filling.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="/styles/colorforpages.css" />
+</head>
 
-    <!--header-->
-    <div id="header" class="sticky-top"></div>
+<body>
+  <!------------------------------>
+  <!-- Your HTML Layout go here -->
+  <!------------------------------>
 
-    <div class="container mt-3">
-      <div class="row justify-content-between">
-        <!-- Total Remaining (Top Left Corner) -->
-        <div class="col-auto">
-          <div class="card border-success shadow-sm p-3" style="max-width: 300px">
-            <div class="form-group">
-              <label class="form-label text-success">
-                <i class="bi bi-piggy-bank me-2"></i>You have: $
-              </label>
-              <span id="remaining" class="ms-2 fw-bold text-success" style="display: inline-block;"></span>
+  <!--header-->
+  <div id="header" class="sticky-top"></div>
+
+  <div class="container mt-3">
+    <!-- Join Group Section (Top Right Corner) -->
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <form id="joinGroupForm" class="d-flex">
+          <input type="text" class="form-control me-2" id="joinCode" placeholder="Enter Join Code" required />
+          <button type="submit" class="btn btn-success">Join Group</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-3 mb-5 fill-space">
+    <h2 class="text-center mb-4">My Adventures</h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
+      <!-- Card Template -->
+      <div class="col d-none" id="groupCardTemplate">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="bi bi-people me-2"></i><span class="group-name"></span>
+            </h5>
+            <p class="card-text">
+              <strong>Goal:</strong> $<span class="group-goal"></span><br />
+              <strong>Saved:</strong> $<span class="group-contribution"></span><br />
+              <strong>Deadline Date:</strong>
+              <span class="group-deadline"></span>
+            </p>
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-success view-details-btn">
+                View Details
+              </button>
+              <button class="btn btn-outline-danger leave-group-btn">
+                Leave Group
+              </button>
             </div>
           </div>
         </div>
-
-        <!-- Join Group Section (Top Right Corner) -->
-        <div class="col-auto">
-          <form id="joinGroupForm" class="d-flex">
-            <input
-              type="text"
-              class="form-control me-2"
-              id="joinCode"
-              placeholder="Enter Join Code"
-              required
-            />
-            <button type="submit" class="btn btn-success">Join Group</button>
-          </form>
-        </div>
       </div>
+
+      <!-- Existing Groups Will Be Populated Here -->
     </div>
+  </div>
 
-    <div class="container mt-3 mb-5 fill-space">
-      <h2 class="text-center mb-4">My Adventures</h2>
+  <!--footer by Cole-->
+  <div id="navbar" class="sticky-bottom"></div>
 
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
-        <!-- Card Template -->
-        <div class="col d-none" id="groupCardTemplate">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">
-                <i class="bi bi-people me-2"></i
-                ><span class="group-name"></span>
-              </h5>
-              <p class="card-text">
-                <strong>Goal:</strong> $<span class="group-goal"></span
-                ><br />
-                <strong>Saved:</strong> $<span
-                  class="group-contribution"
-                ></span
-                ><br />
-                <strong>Deadline Date:</strong>
-                <span class="group-deadline"></span>
-              </p>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-success view-details-btn">
-                  View Details
-                </button>
-                <button class="btn btn-outline-danger leave-group-btn">
-                  Leave Group
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+  <!---------------------------------------------->
+  <!-- Your own JavaScript functions go here    -->
+  <!---------------------------------------------->
 
-        <!-- Existing Groups Will Be Populated Here -->
-      </div>
-    </div>
+  <!-- Link to scripts of your own -->
+  <script src="/scripts/firebaseAPI_BBY28.js"></script>
+  <script src="/scripts/groupspage.js"></script>
+  <script src="/scripts/font.js"></script>
+  <script src="/scripts/skeleton.js"></script>
+</body>
 
-    <!--footer by Cole-->
-    <div id="navbar" class="sticky-bottom"></div>
-
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
-
-    <!-- Link to scripts of your own -->
-    <script src="/scripts/firebaseAPI_BBY28.js"></script>
-    <script src="/scripts/groupspage.js"></script>
-    <script src="/scripts/font.js"></script>
-    <script src="/scripts/skeleton.js"></script>
-  </body>
 </html>
