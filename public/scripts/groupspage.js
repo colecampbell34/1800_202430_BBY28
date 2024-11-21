@@ -221,6 +221,12 @@ function leaveGroup(groupId) {
     return;
   }
 
+  // Confirm leave with the user
+  const confirmation = confirm(
+    "Are you sure you want to leave this group?"
+  );
+  if (!confirmation) return;
+
   const groupDocRef = db.collection("budget-sheets").doc(groupId);
   const userExpRef = db.collection("users").doc(userId).collection("expenses").doc("expensesDoc");
   let joinCode;

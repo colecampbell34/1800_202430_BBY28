@@ -15,10 +15,10 @@ body {
 
 .yellow-button {
   background-color: #DAD873;
-  color: black;
+  color: #454D66;
 }
 
 .yellow-button:hover {
   background-color: #adac5c;
-  color: black;
+  color: #454D66;
 }
