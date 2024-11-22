@@ -9,3 +9,43 @@
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.description-section {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #6c757d; /* Muted text color */
+}
+
+.description-section p {
+  margin-bottom: 1.2rem;
+}
+
+.description-section ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.description-section ul li {
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 25px;
+}
+
+.description-section ul li::before {
+  content: '•'; /* Custom bullet point */
+  color: #309975; /* Use a theme color */
+  font-size: 1.2rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.description-section p strong {
+  color: #309975; /* Highlight strong text with theme color */
+}
+
+.description-section p i {
+  font-style: italic;
+  font-weight: bold;
+}
