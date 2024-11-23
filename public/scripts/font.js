@@ -1,7 +1,7 @@
 // Wait for the DOM to fully load
 document.addEventListener("DOMContentLoaded", function () {
   // Retrieve the saved font size from localStorage or default to 16px
-  let currentFontSize = parseInt(localStorage.getItem("fontSize")) || 16;
+  let currentFontSize = parseInt(localStorage.getItem("fontSize")) || 14;
 
   // Apply the saved font size on page load
   document.body.style.fontSize = `${currentFontSize}px`;
