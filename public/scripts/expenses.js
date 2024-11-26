@@ -8,7 +8,6 @@ function submitAmounts() {
 
   expensesRef.get().then((doc) => {
     if (doc.exists) {
-      console.log("Exists");
       const currentIncome = doc.data().totalIncome || 0;
       const currentExpenses = doc.data().totalExpenses || 0;
 

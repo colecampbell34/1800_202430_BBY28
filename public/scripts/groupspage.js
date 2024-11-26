@@ -200,7 +200,6 @@ function createGroupCard(groupData, groupId, template) {
 
 
 function viewGroupDetails(groupId) {
-  console.log("Group ID before redirection:", groupId); // Check value here
   if (!groupId) {
     console.error("No Group ID provided!");
     return; // Prevent proceeding if groupId is not valid

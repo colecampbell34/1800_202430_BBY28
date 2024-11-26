@@ -7,7 +7,7 @@ document.querySelector("#logout").addEventListener("click", function() {
     .signOut()
     .then(() => {
       // Sign-out successful.
-      console.log("logging out user");
+      // console.log("logging out user");
       window.location.replace("/");
     })
     .catch((error) => {
@@ -32,7 +32,7 @@ document.getElementById("delete").addEventListener("click", async (e) => {
   if (!confirmation) return;
 
   try {
-    // Step 1: Delete user data from Firetore
+    // Step 1: Delete user data from Firestore
     await deleteUserData(userId); // <== await pauses here until deleteUserData is done
 
     try {
@@ -68,40 +68,29 @@ async function deleteUserData(userId) {
     const userDocRef = db.collection("users").doc(userId);
     await deleteUserDocumentAndSubcollections(userDocRef);
     await userDocRef.delete();
-    console.log(`User document and sub-collections for ${userId} deleted.`);
+    // console.log(`User document and sub-collections for ${userId} deleted.`);
 
     // Retrieve all group IDs in the "budget-sheet" collection
     const groupIdsSnapshot = await db.collection("budget-sheets").get();
-    console.log(`Number of groups found: ${groupIdsSnapshot.size}`);
+    // console.log(`Number of groups found: ${groupIdsSnapshot.size}`);
 
     // Sequentially check and delete user documents in each "group-members" sub-collection
     for (const groupDoc of groupIdsSnapshot.docs) {
-      console.log("The for loop was entered");
       const groupId = groupDoc.id;
-      console.log("The groupId i am checking is: ", groupId);
       const memberDocRef = db
         .collection("budget-sheets")
         .doc(groupId)
         .collection("group-members")
         .doc(userId);
 
-      // Log the memberDocRef path to verify it's correct
-      console.log(
-        `Checking group ${groupId} for user ${userId} in group-members...`
-      );
-
       // Check if the user document exists in this group's "group-members" collection
       const memberDoc = await memberDocRef.get();
-      console.log(`Test user document found: ${memberDoc.exists}`);
 
       if (memberDoc.exists) {
         await memberDocRef.delete();
-        console.log(
-          `Deleted user ${userId} from group-members in group ${groupId}`
-        );
       }
     }
-    console.log(`User ${userId} successfully removed from all groups.`);
+    // console.log(`User ${userId} successfully removed from all groups.`);
   } catch (error) {
     console.error("Error deleting user data:", error);
     throw error;
@@ -123,8 +112,5 @@ async function deleteUserDocumentAndSubcollections(userDocRef) {
       batch.delete(doc.ref);
     });
     await batch.commit();
-    console.log(
-      `Deleted sub-collection '${subcollection}' for user ${userDocRef.id}`
-    );
   }
 }

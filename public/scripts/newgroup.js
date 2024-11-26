@@ -34,8 +34,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
     .add(groupData)
     .then((docRef) => {
       // docRef creates a reference to the newly created group doc id
-      console.log("New group created with join code:", joinCode);
-
       // Assuming `userId` is the ID of the currently logged-in user
       const userId = firebase.auth().currentUser.uid;
       const userName = firebase.auth().currentUser.displayName;

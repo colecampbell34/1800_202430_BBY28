@@ -353,7 +353,7 @@ function addAllocationData(category, amount) {
     .collection("expenseBreakdown")
     .add(allocationData)
     .then(() => {
-      console.log("Allocation added successfully!");
+      // console.log("Allocation added successfully!");
       loadExpenseBreakdown();
     })
     .catch((error) => {
@@ -393,7 +393,7 @@ function recalculateAllocations() {
               return batch.commit();
             })
             .then(() => {
-              console.log("All allocations recalculated successfully.");
+              // console.log("All allocations recalculated successfully.");
               loadExpenseBreakdown(); // Reload the table with updated data
             })
             .catch((error) => {
@@ -478,7 +478,7 @@ function removeAllocation(allocationId) {
     .doc(allocationId)
     .delete()
     .then(() => {
-      console.log("Allocation removed successfully!");
+      // console.log("Allocation removed successfully!");
       loadExpenseBreakdown(); // Reload the table to update the UI
     })
     .catch((error) => {
@@ -497,7 +497,7 @@ function editGroupName() {
       .doc(groupId)
       .update({ groupname: newname }) // Update the group name
       .then(() => {
-        console.log("Group name updated successfully.");
+        // console.log("Group name updated successfully.");
 
         // Reload the updated group name in the HTML
         db.collection("budget-sheets")
