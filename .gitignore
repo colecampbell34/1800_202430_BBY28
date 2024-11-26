@@ -5,3 +5,4 @@ node_modules/
 firestore.rules
 firebase.json
 firestore.indexes.json
+.firebase
