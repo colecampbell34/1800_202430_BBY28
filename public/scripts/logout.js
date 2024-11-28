@@ -2,6 +2,11 @@
 // Call this function when the "logout" button is clicked
 //-------------------------------------------------
 document.querySelector("#logout").addEventListener("click", function() {
+  const confirmation = confirm(
+    "Are you sure you want to log out?"
+  );
+  if (!confirmation) return;
+
   firebase
     .auth()
     .signOut()
