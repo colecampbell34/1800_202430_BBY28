@@ -1,8 +1,6 @@
 # Project Title
 
 ## 1. Project Description
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
 Our team, BBY-28, is developing a web application to help young adult communities become confident in their finances, by allowing easy collaboration and visualization of shared financial goals and individual contributions.
 
 ## 2. Names of Contributors
