@@ -51,44 +51,41 @@ Content of the project folder:
 ├── groups.html              # group page showing the existing groups for specific user.
 ├── budgetsheet.html         # budgetsheet showing details for each group
 ├── settings.html            # settings for font size and account settings.
-├── 404.html    
+├── 404.html                 # error pages
 ├── .firebaserc              
 ├── firebase.json
 └── README.md
 
 It has the following subfolders and files:
 ├── images                   # Folder for images
-    /cointree_BW.jpg         # Acknowledge source
-    /instagram.svg
-    /join-code.png
-    /line.svg
-    /make-changes.png
-    /my-groups.png
-    /progress-all-groups.png
-    /timeline.png
-    /twitter.svg
-    /youtube.sbg
+    /cointree_BW.jpg         # logo of our app
+    /join-code.png           # img for the index page
+    /line.svg                # img for the index page
+    /make-changes.png        # img for the index page
+    /my-groups.png           # img for the index page 
+    /progress-all-groups.png # img for the index page
+    /timeline.png            # img for the index page
 ├── scripts                  # Folder for scripts
-    /authentication.js
-    /expenses.js
-    /firebaseAPI_BBY28.js
-    /font.js
-    /groupdata.js
-    /groupspage.js
-    /logout.js
-    /main.js
-    /newgroup.js
-    /skeleton-before-login.js
-    /skeleton.js 
+    /authentication.js       # Initialize the FirebaseUI Widget using Firebase.
+    /expenses.js             # Initialize and calculate personal expenses.
+    /firebaseAPI_BBY28.js    # Your web app's Firebase configuration
+    /font.js                 # setting page font related functions
+    /groupdata.js            # budgetsheet related functions
+    /groupspage.js           # grouppage related functions for add group and group managment
+    /logout.js               # setting page account related functions
+    /main.js                 # main page related functions, such as progress bar functions.
+    /newgroup.js             # new page related functions
+    /skeleton-before-login.js# skeleton file for before login
+    /skeleton.js             # skeleton file for after login
 ├── styles                   # Folder for styles
-    /budgetsheet.css
-    /colorforpages.css
-    /filling.css
-    /index.css
-    /style.css
+    /budgetsheet.css         # budgetsheet styles
+    /colorforpages.css       # color related settings
+    /filling.css             # nav bar settings
+    /index.css               # index page styles
+    /style.css               # main design settings
 ├── skeleton
-    /header-before-login.html
-    /header.html
-    /navbar.html
+    /header-before-login.html # headers before login
+    /header.html              # headers after login
+    /navbar.html              # navbar after login
 
 
